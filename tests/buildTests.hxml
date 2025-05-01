@@ -8,6 +8,7 @@
 --define instrument-quiet
 --define no-deprecation-warnings
 
+--macro addMetadata("@:build(InstrumentationPatcher.patch())", "instrument.Instrumentation")
 --macro instrument.Instrumentation.coverage(["lazylambda"], ["../src"], [])
 --main TestSuiteMain
 
