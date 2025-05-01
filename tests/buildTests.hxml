@@ -1,11 +1,21 @@
 --class-path ../src
 --class-path src
---library instrument
+--library utest:git:https://github.com/haxe-utest/utest#master
+--library instrument:1.4.0
+
 --define coverage-console-summary-reporter
 --define coverage-lcov-reporter=lcov.info
+--define instrument-quiet
+--define no-deprecation-warnings
+
 --macro instrument.Instrumentation.coverage(["lazylambda"], ["../src"], [])
 --main TestSuiteMain
 
 --each
 
 --hl out/hashlink/suite.hl
+
+# --next
+# --library hxnodejs
+# --define js-es=6
+# --js out/nodejs/suite.js

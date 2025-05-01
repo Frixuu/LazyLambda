@@ -2,5 +2,3 @@ dump/
 .idea/
 .vscode/
 .zed/
-*.hl
-lcov.info
