@@ -15,18 +15,41 @@ jobs:
           - "4.3.6"
           - "latest"
     steps:
+      - name: "Install Haxe"
+        uses: "krdlab/setup-haxe@v1"
+        with:
+          haxe-version: "${{ matrix.haxe-version }}"
+      - name: "Get Haxelib local repository path"
+        id: "haxelib-get-path"
+        shell: "bash"
+        run: |
+          echo "dir=$(haxelib config)" >> $GITHUB_OUTPUT
       - name: "Checkout"
         uses: "actions/checkout@v4"
         with:
           lfs: false
-      - name: "Install Haxe"
-        uses: "krdlab/setup-haxe@v1"
+      - name: "Restore cached Haxe dependencies"
+        id: "restore-cache"
+        uses: "actions/cache/restore@v4"
         with:
-          haxe-version: "latest"
+          path: "${{ steps.haxelib-get-path.outputs.dir }}"
+          key: "haxelib-repo-${{ matrix.haxe-version }}-${{ hashFiles('tests/buildTests.hxml') }}"
+          restore-keys: |
+            haxelib-repo-${{ matrix.haxe-version }}-
+            haxelib-repo-
       - name: "Install Haxe dependencies"
+        if: steps.restore-cache.outputs.cache-hit != 'true'
+        shell: "bash"
         run: "haxelib install tests/buildTests.hxml --always --quiet"
+      - name: "Cache Haxe dependencies"
+        if: steps.restore-cache.outputs.cache-hit != 'true'
+        uses: "actions/cache/save@v4"
+        with:
+          path: "${{ steps.haxelib-get-path.outputs.dir }}"
+          key: "haxelib-repo-${{ matrix.haxe-version }}-${{ hashFiles('tests/buildTests.hxml') }}"
       - name: "Build tests"
         working-directory: "tests"
+        shell: "bash"
         run: "haxe buildTests.hxml"
       - name: "Upload built suites"
         uses: "actions/upload-artifact@v4"
@@ -46,14 +69,14 @@ jobs:
     needs:
       - "build"
     steps:
-      - name: "Download test suites"
-        uses: "actions/download-artifact@v4"
-        with:
-          name: "suites-4.3.6"
       - name: "Install Hashlink"
         uses: "cedx/setup-hashlink@v6"
         with:
           version: "${{ matrix.hl-version }}"
+      - name: "Download test suites"
+        uses: "actions/download-artifact@v4"
+        with:
+          name: "suites-4.3.6"
       - name: "Run test suite"
         shell: "bash"
         run: "hl hashlink/suite.hl"

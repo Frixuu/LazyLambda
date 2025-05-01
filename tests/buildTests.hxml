@@ -1,6 +1,6 @@
 --class-path ../src
 --class-path src
---library utest:git:https://github.com/haxe-utest/utest#master
+--library utest:git:https://github.com/haxe-utest/utest#f759c0aa257aa723b3dd607cf7cb53d16194d13f
 --library instrument:1.4.0
 
 --define coverage-console-summary-reporter

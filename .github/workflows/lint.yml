@@ -8,28 +8,64 @@ jobs:
     name: "Formatting"
     runs-on: "ubuntu-latest"
     steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v4"
       - name: "Install Haxe"
         uses: "krdlab/setup-haxe@v1"
         with:
           haxe-version: "4.3.6"
-      - name: "Install tools"
-        run: "haxelib --global install formatter --quiet"
+      - name: "Get Haxelib local repository path"
+        id: "haxelib-get-path"
+        shell: "bash"
+        run: |
+          echo "dir=$(haxelib config)" >> $GITHUB_OUTPUT
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+      - name: "Restore cached Haxe tools"
+        id: "restore-cache"
+        uses: "actions/cache/restore@v4"
+        with:
+          path: "${{ steps.haxelib-get-path.outputs.dir }}"
+          key: "haxelib-repo-formatter-1.18.0"
+      - name: "Install Haxe tools"
+        if: steps.restore-cache.outputs.cache-hit != 'true'
+        run: "haxelib install formatter 1.18.0 --quiet"
+      - name: "Cache Haxe tools"
+        if: steps.restore-cache.outputs.cache-hit != 'true'
+        uses: "actions/cache/save@v4"
+        with:
+          path: "${{ steps.haxelib-get-path.outputs.dir }}"
+          key: "haxelib-repo-formatter-1.18.0"
       - name: "Run formatter"
-        run: "haxelib --global run formatter --check --source src"
+        run: "haxelib run formatter --check --source src"
 
   checkstyle:
     name: "Static analysis"
     runs-on: "ubuntu-latest"
     steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v4"
       - name: "Install Haxe"
         uses: "krdlab/setup-haxe@v1"
         with:
           haxe-version: "4.3.6"
+      - name: "Get Haxelib local repository path"
+        id: "haxelib-get-path"
+        shell: "bash"
+        run: |
+          echo "dir=$(haxelib config)" >> $GITHUB_OUTPUT
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+      - name: "Restore cached Haxe tools"
+        id: "restore-cache"
+        uses: "actions/cache/restore@v4"
+        with:
+          path: "${{ steps.haxelib-get-path.outputs.dir }}"
+          key: "haxelib-repo-checkstyle-2.9.0"
       - name: "Install tools"
-        run: "haxelib --global install checkstyle --quiet"
+        if: steps.restore-cache.outputs.cache-hit != 'true'
+        run: "haxelib install checkstyle 2.9.0 --quiet"
+      - name: "Cache Haxe tools"
+        if: steps.restore-cache.outputs.cache-hit != 'true'
+        uses: "actions/cache/save@v4"
+        with:
+          path: "${{ steps.haxelib-get-path.outputs.dir }}"
+          key: "haxelib-repo-checkstyle-2.9.0"
       - name: "Run Checkstyle"
-        run: "haxelib --global run checkstyle --show-parser-errors --exitcode --source src"
+        run: "haxelib run checkstyle --show-parser-errors --exitcode --source src"
