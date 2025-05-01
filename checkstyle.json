@@ -1,0 +1,243 @@
+{
+  "defaultSeverity": "INFO",
+  "exclude": {
+    "all": []
+  },
+  "checks": [
+    {
+      "type": "Anonymous",
+      "props": {
+        "severity": "ERROR"
+      }
+    },
+    {
+      "type": "ModifierOrder",
+      "props": {
+        "severity": "ERROR",
+        "modifiers": [
+          "PUBLIC_PRIVATE",
+          "STATIC",
+          "DYNAMIC",
+          "OVERRIDE",
+          "INLINE",
+          "FINAL",
+          "MACRO"
+        ]
+      }
+    },
+    {
+      "type": "EmptyPackage",
+      "props": {
+        "enforceEmptyPackage": true,
+        "severity": "ERROR"
+      }
+    },
+    {
+      "type": "Final",
+      "props": {
+        "severity": "IGNORE"
+      }
+    },
+    {
+      "type": "RedundantModifier",
+      "props": {
+        "enforcePublicPrivate": true,
+        "severity": "ERROR"
+      }
+    },
+    {
+      "type": "FileLength",
+      "props": {
+        "severity": "WARNING",
+        "max": 500,
+        "ignoreEmptyLines": true
+      }
+    },
+    {
+      "type": "LineLength",
+      "props": {
+        "severity": "ERROR",
+        "max": 140
+      }
+    },
+    {
+      "type": "BlockBreakingConditional",
+      "props": {
+        "severity": "INFO"
+      }
+    },
+    {
+      "type": "EmptyBlock",
+      "props": {
+        "tokens": [
+          "CLASS_DEF",
+          "ENUM_DEF",
+          "ABSTRACT_DEF",
+          "TYPEDEF_DEF",
+          "INTERFACE_DEF",
+          "OBJECT_DECL",
+          "FUNCTION",
+          "FOR",
+          "IF",
+          "WHILE",
+          "SWITCH",
+          "TRY",
+          "CATCH"
+        ],
+        "option": "empty",
+        "severity": "INFO"
+      }
+    },
+    {
+      "type": "DefaultComesLast",
+      "props": {
+        "severity": "ERROR"
+      }
+    },
+    {
+      "type": "InnerAssignment",
+      "props": {
+        "severity": "WARNING",
+        "ignoreReturnAssignments": true
+      }
+    },
+    {
+      "type": "NestedControlFlow",
+      "props": {
+        "severity": "WARNING",
+        "max": 5
+      }
+    },
+    {
+      "type": "SimplifyBooleanExpression",
+      "props": {
+        "severity": "ERROR"
+      }
+    },
+    {
+      "type": "SimplifyBooleanReturn",
+      "props": {
+        "severity": "ERROR"
+      }
+    },
+    {
+      "type": "UnusedLocalVar"
+    },
+    {
+      "type": "DocCommentStyle",
+      "props": {
+        "lineStyle": "none",
+        "startStyle": "twostars"
+      }
+    },
+    {
+      "type": "TODOComment",
+      "props": {
+        "format": "TODO|FIXME|HACK|XXX|BUG|FUTURE",
+        "severity": "INFO"
+      }
+    },
+    {
+      "type": "TypeDocComment",
+      "props": {
+        "severity": "IGNORE",
+        "tokens": [
+          "ABSTRACT_DEF",
+          "CLASS_DEF",
+          "ENUM_DEF",
+          "INTERFACE_DEF",
+          "TYPEDEF_DEF"
+        ]
+      }
+    },
+    {
+      "type": "FieldDocComment",
+      "props": {
+        "severity": "IGNORE",
+        "requireParams": true,
+        "fieldType": "BOTH",
+        "requireReturn": true,
+        "ignoreOverride": true,
+        "tokens": [
+          "ABSTRACT_DEF",
+          "CLASS_DEF",
+          "ENUM_DEF",
+          "INTERFACE_DEF",
+          "TYPEDEF_DEF"
+        ],
+        "modifier": "PUBLIC",
+        "excludeNames": ["new", "toString"]
+      }
+    },
+    {
+      "type": "ParameterNumber",
+      "props": {
+        "severity": "WARNING",
+        "max": 5,
+        "ignoreOverriddenMethods": true
+      }
+    },
+    {
+      "type": "UnnecessaryConstructor",
+      "props": {
+        "severity": "IGNORE"
+      }
+    },
+    {
+      "type": "Return",
+      "props": {
+        "severity": "IGNORE",
+        "allowEmptyReturn": true,
+        "enforceReturnType": false,
+        "enforceReturnTypeForAnonymous": false
+      }
+    },
+    {
+      "type": "Type",
+      "props": {
+        "severity": "ERROR",
+        "ignoreEnumAbstractValues": true
+      }
+    },
+    {
+      "type": "HexadecimalLiteral",
+      "props": {
+        "severity": "ERROR",
+        "option": "upperCase"
+      }
+    },
+    {
+      "type": "StringLiteral",
+      "props": {
+        "policy": "doubleAndInterpolation",
+        "allowException": false,
+        "severity": "ERROR"
+      }
+    },
+    {
+      "type": "ArrayLiteral",
+      "props": {
+        "severity": "ERROR"
+      }
+    },
+    {
+      "type": "CyclomaticComplexity",
+      "props": {
+        "thresholds": [
+          {
+            "severity": "INFO",
+            "complexity": 15
+          },
+          {
+            "severity": "WARNING",
+            "complexity": 22
+          },
+          {
+            "severity": "ERROR",
+            "complexity": 40
+          }
+        ]
+      }
+    }
+  ]
+}

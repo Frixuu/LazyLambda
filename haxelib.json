@@ -1,0 +1,12 @@
+{
+  "name": "lazylambda",
+  "url": "https://github.com/Frixuu/LazyLambda",
+  "description": "Lambda.* API, but for Iterator<T>",
+  "license": "MIT",
+  "version": "0.0.1",
+  "classPath": "src/",
+  "releasenote": "N/A",
+  "contributors": ["frixuu"],
+  "dependencies": {},
+  "tags": ["collection", "ds", "lambda"]
+}

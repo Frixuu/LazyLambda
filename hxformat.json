@@ -1,0 +1,127 @@
+{
+  "emptyLines": {
+    "maxAnywhereInFile": 1,
+    "afterLeftCurly": "keep",
+    "enumAbstractEmptyLines": {
+      "betweenVars": 0,
+      "existingBetweenFields": "remove"
+    },
+    "abstractEmptyLines": {
+      "existingBetweenFields": "keep",
+      "beginType": 1
+    },
+    "classEmptyLines": {
+      "existingBetweenFields": "keep",
+      "beginType": 1
+    },
+    "afterBlocks": "remove",
+    "beforeDocCommentEmptyLines": "one",
+    "afterFieldsWithDocComments": "ignore",
+    "importAndUsing": {
+      "betweenImports": 0,
+      "beforeUsing": 1
+    }
+  },
+  "indentation": {
+    "character": "    ",
+    "trailingWhitespace": true
+  },
+  "lineEnds": {
+    "leftCurly": "after",
+    "emptyCurly": "noBreak"
+  },
+  "whitespace": {
+    "arrowFunctionsPolicy": "around",
+    "functionTypeHaxe3Policy": "around",
+    "functionTypeHaxe4Policy": "around",
+    "colonPolicy": "after",
+    "caseColonPolicy": "after",
+    "typeHintColonPolicy": "after",
+    "typeCheckColonPolicy": "after",
+    "typeParamOpenPolicy": "none",
+    "typeParamClosePolicy": "none",
+    "objectFieldColonPolicy": "after",
+    "ternaryPolicy": "around",
+    "parenConfig": {
+      "conditionParens": {
+        "openingPolicy": "before",
+        "closingPolicy": "none"
+      },
+      "anonFuncParamParens": {
+        "openingPolicy": "none",
+        "closingPolicy": "none",
+        "removeInnerWhenEmpty": true
+      },
+      "funcParamParens": {
+        "openingPolicy": "none",
+        "closingPolicy": "none",
+        "removeInnerWhenEmpty": true
+      }
+    }
+  },
+  "sameLine": {
+    "ifBody": "keep",
+    "ifElse": "same",
+    "elseBody": "next",
+    "elseIf": "same",
+    "expressionIf": "same",
+    "expressionIfWithBlocks": false,
+    "doWhile": "keep",
+    "functionBody": "next",
+    "anonFunctionBody": "same"
+  },
+  "wrapping": {
+    "maxLineLength": 100,
+    "arrayMatrixWrap": "matrixWrapWithAlign",
+    "arrayWrap": {
+      "defaultLocation": "afterLast"
+    },
+    "callParameter": {
+      "defaultWrap": "onePerLine",
+      "rules": [
+        {
+          "conditions": [
+            {
+              "cond": "lineLength <= n",
+              "value": 100
+            }
+          ],
+          "type": "fillLine"
+        }
+      ]
+    },
+    "casePattern": {
+      "defaultWrap": "fillLine"
+    },
+    "methodChain": {
+      "defaultWrap": "onePerLineAfterFirst",
+      "defaultLocation": "afterLast",
+      "rules": [
+        {
+          "conditions": [
+            {
+              "cond": "lineLength <= n",
+              "value": 100
+            }
+          ],
+          "type": "fillLine"
+        }
+      ]
+    },
+    "functionSignature": {
+      "defaultWrap": "onePerLine",
+      "defaultLocation": "afterLast",
+      "rules": [
+        {
+          "conditions": [
+            {
+              "cond": "lineLength <= n",
+              "value": 100
+            }
+          ],
+          "type": "noWrap"
+        }
+      ]
+    }
+  }
+}
