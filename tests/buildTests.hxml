@@ -1,0 +1,11 @@
+--class-path ../src
+--class-path src
+--library instrument
+--define coverage-console-summary-reporter
+--define coverage-lcov-reporter=lcov.info
+--macro instrument.Instrumentation.coverage(["lazylambda"], ["../src"], [])
+--main TestSuiteMain
+
+--each
+
+--hl out/hashlink/suite.hl

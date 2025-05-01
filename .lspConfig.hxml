@@ -1,4 +1,5 @@
 --class-path src
+--class-path tests/src
 
 --cpp out
 --no-output

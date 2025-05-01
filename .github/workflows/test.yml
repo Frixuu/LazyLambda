@@ -1,0 +1,59 @@
+name: "Test"
+on:
+  - "push"
+  - "pull_request"
+
+jobs:
+  build:
+    name: "Build suites (with Haxe ${{ matrix.haxe-version }})"
+    runs-on: "ubuntu-latest"
+    strategy:
+      fail-fast: false
+      matrix:
+        haxe-version:
+          - "4.2.0"
+          - "4.3.6"
+          - "latest"
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+        with:
+          lfs: false
+      - name: "Install Haxe"
+        uses: "krdlab/setup-haxe@v1"
+        with:
+          haxe-version: "latest"
+      - name: "Install Haxe dependencies"
+        run: "haxelib install tests/buildTests.hxml --always --quiet"
+      - name: "Build tests"
+        working-directory: "tests"
+        run: "haxe buildTests.hxml"
+      - name: "Upload built suites"
+        uses: "actions/upload-artifact@v4"
+        with:
+          name: "suites-${{ matrix.haxe-version }}"
+          path: "tests/out/"
+          retention-days: 1
+
+  hashlink:
+    name: "Hashlink (${{ matrix.hl-version }}, Windows)"
+    runs-on: "windows-latest"
+    strategy:
+      fail-fast: false
+      matrix:
+        hl-version:
+          - "1.15.0"
+    needs:
+      - "build"
+    steps:
+      - name: "Download test suites"
+        uses: "actions/download-artifact@v4"
+        with:
+          name: "suites-4.3.6"
+      - name: "Install Hashlink"
+        uses: "cedx/setup-hashlink@v6"
+        with:
+          version: "${{ matrix.hl-version }}"
+      - name: "Run test suite"
+        shell: "bash"
+        run: "hl hashlink/suite.hl"
