@@ -17,6 +17,7 @@ final class TestSuiteMain {
         runner.addCase(new CountTest());
         runner.addCase(new FilterTest());
         runner.addCase(new FirstTest());
+        runner.addCase(new ForEachTest());
         runner.addCase(new MapTest());
         
         Report.create(runner);

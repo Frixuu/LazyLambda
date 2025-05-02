@@ -74,7 +74,19 @@
     "maxLineLength": 100,
     "arrayMatrixWrap": "matrixWrapWithAlign",
     "arrayWrap": {
-      "defaultLocation": "afterLast"
+      "defaultWrap": "onePerLine",
+      "defaultLocation": "afterLast",
+      "rules": [
+        {
+          "conditions": [
+            {
+              "cond": "lineLength <= n",
+              "value": 100
+            }
+          ],
+          "type": "noWrap"
+        }
+      ]
     },
     "callParameter": {
       "defaultWrap": "onePerLine",
