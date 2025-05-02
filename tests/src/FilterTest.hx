@@ -57,6 +57,7 @@ class FilterTest extends Test {
     public function spec__Nulls_are_filtered_out() {
         final arr: Array<Null<String>> = ["hello", null, "world", null, null];
         final iter = arr.iterator().filterNonNull();
+        Assert.isTrue(iter.hasNext());
         Assert.equals("hello", iter.next());
         Assert.equals("world", iter.next());
         Assert.isFalse(iter.hasNext());
@@ -74,6 +75,7 @@ class FilterTest extends Test {
         final iter = arr.iterator().filterSome();
         Assert.equals(1.0, iter.next());
         Assert.equals(-7.2, iter.next());
+        Assert.isTrue(iter.hasNext());
         Assert.isTrue(Math.isNaN(iter.next()));
         Assert.isFalse(iter.hasNext());
     }
@@ -95,7 +97,7 @@ class FilterTest extends Test {
     
     public function spec__Type_filter_works_with_booleans() {
         final arr: Array<Any> = ["hello", 1, 2, false, 5.6, {}, [7]];
-        final iter = arr.iterator().filterIs(Bool);
+        final iter: Iterator<Bool> = arr.iterator().filterIs(Bool);
         Assert.equals(false, iter.next());
         Assert.isFalse(iter.hasNext());
     }
@@ -103,6 +105,7 @@ class FilterTest extends Test {
     public function spec__Type_filter_works_with_strings() {
         final arr: Array<Any> = ["hello", 1, 2, false, 5.6, {}, [7]];
         final iter = arr.iterator().filterIs(String);
+        Assert.isTrue(iter.hasNext());
         Assert.equals("hello", iter.next());
         Assert.isFalse(iter.hasNext());
     }
@@ -122,6 +125,13 @@ class FilterTest extends Test {
         Assert.equals(arr[0], iter.next());
         Assert.equals(arr[1], iter.next());
         Assert.equals(arr[3], iter.next());
+        Assert.isFalse(iter.hasNext());
+    }
+    
+    public function spec__Type_filter_works_with_enums() {
+        final arr: Array<Any> = ["hello", 1, Some(4), new StringBuf(), ["foo" => "bar"]];
+        final iter = arr.iterator().filterIs(Option);
+        Assert.same(Some(4), iter.next());
         Assert.isFalse(iter.hasNext());
     }
     

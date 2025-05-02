@@ -14,7 +14,9 @@ final class TestSuiteMain {
             Coverage.endCoverage();
         });
         
+        runner.addCase(new CountTest());
         runner.addCase(new FilterTest());
+        runner.addCase(new FirstTest());
         runner.addCase(new MapTest());
         
         Report.create(runner);

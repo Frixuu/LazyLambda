@@ -13,9 +13,16 @@ final class Filter {
         return new IteratorFiltering(src, predicate);
     }
     
-    public static extern inline overload function filterIs<T, R>(
+    public static extern inline overload function filterIs<T, R: {}>(
         src: Iterator<T>,
         matcher: Class<R>
+    ): Iterator<R> {
+        return new IteratorFilteringIs(src, matcher);
+    }
+    
+    public static extern inline overload function filterIs<T, R: {}>(
+        src: Iterator<T>,
+        matcher: Enum<R>
     ): Iterator<R> {
         return new IteratorFilteringIs(src, matcher);
     }
