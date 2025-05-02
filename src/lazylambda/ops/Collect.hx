@@ -30,14 +30,6 @@ final class Collect {
     }
     
     @:generic
-    public static extern inline overload function toMap<T, K>(
-        src: Iterator<T>,
-        keySelector: (T) -> K
-    ): haxe.ds.Map<K, T> {
-        return [for (item in src) keySelector(item) => item];
-    }
-    
-    @:generic
     public static extern inline overload function toMap<T, K, V>(
         src: Iterator<T>,
         keySelector: (T) -> K,
