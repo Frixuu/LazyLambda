@@ -15,6 +15,7 @@ final class TestSuiteMain {
         });
         
         runner.addCase(new FilterTest());
+        runner.addCase(new MapTest());
         
         Report.create(runner);
         runner.run();
