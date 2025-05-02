@@ -4,19 +4,18 @@ package;
 import utest.Assert;
 import utest.Test;
 
-using TestUtils;
 using lazylambda.Prelude;
 
 class ForEachTest extends Test {
 
-    public function spec__ForEach_is_called_exactly_once_for_each_item() {
+    public function test__ForEach_is_called_exactly_once_for_each_item() {
         final src = (0...10);
         final values: Array<Int> = [];
         src.forEach(i -> values.push(i));
         Assert.same([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], values);
     }
     
-    public function spec__ForEachIndexed_is_called_exactly_once_for_each_item() {
+    public function test__ForEachIndexed_is_called_exactly_once_for_each_item() {
     
         final src = (10...20);
         final values: Array<String> = [];

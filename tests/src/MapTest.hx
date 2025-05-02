@@ -4,12 +4,11 @@ package;
 import utest.Assert;
 import utest.Test;
 
-using TestUtils;
 using lazylambda.Prelude;
 
 class MapTest extends Test {
 
-    public function spec__Map_operator_can_be_chained() {
+    public function test__Map_operator_can_be_chained() {
     
         final iter = (1...10).map(i -> i + 1.5)
             .map(f -> Std.string(f))
@@ -28,7 +27,7 @@ class MapTest extends Test {
         Assert.isFalse(iter.hasNext());
     }
     
-    public function spec__Values_can_be_extracted() {
+    public function test__Values_can_be_extracted() {
     
         final map = ["foo" => 1, "bar" => 2, "baz" => 3];
         final iter = map.keyValueIterator().values();
