@@ -6,10 +6,10 @@ import haxe.Exception;
 final class IteratorFilteringIs<T, R> {
 
     private final src: Iterator<T>;
-    private final matcher: Class<R>;
+    private final matcher: Any;
     private var nextItem: Null<R>;
     
-    public function new(src: Iterator<T>, matcher: Class<R>) {
+    public function new(src: Iterator<T>, matcher: Any) {
         this.src = src;
         this.matcher = matcher;
         this.nextItem = null;

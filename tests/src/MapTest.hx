@@ -27,4 +27,18 @@ class MapTest extends Test {
         Assert.equals("11.5", iter.next());
         Assert.isFalse(iter.hasNext());
     }
+    
+    public function spec__Values_can_be_extracted() {
+    
+        final map = ["foo" => 1, "bar" => 2, "baz" => 3];
+        final iter = map.keyValueIterator().values();
+        
+        final values: Array<Int> = [];
+        for (value in iter) {
+            values.push(value);
+        }
+        
+        values.sort((a, b) -> a - b);
+        Assert.same([1, 2, 3], values);
+    }
 }

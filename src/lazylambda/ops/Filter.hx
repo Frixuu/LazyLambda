@@ -13,7 +13,17 @@ final class Filter {
         return new IteratorFiltering(src, predicate);
     }
     
-    public static inline function filterIs<T, R>(src: Iterator<T>, matcher: Class<R>): Iterator<R> {
+    public static extern inline overload function filterIs<T, R>(
+        src: Iterator<T>,
+        matcher: Class<R>
+    ): Iterator<R> {
+        return new IteratorFilteringIs(src, matcher);
+    }
+    
+    public static extern inline overload function filterIs<T, R>(
+        src: Iterator<T>,
+        matcher: Any
+    ): Iterator<R> {
         return new IteratorFilteringIs(src, matcher);
     }
     

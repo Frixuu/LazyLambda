@@ -2,8 +2,11 @@
 package;
 
 import Math.NaN;
+import haxe.Constraints.IMap;
 import haxe.Exception;
+import haxe.ds.IntMap;
 import haxe.ds.Option;
+import haxe.ds.StringMap;
 import utest.Assert;
 import utest.Test;
 
@@ -59,6 +62,13 @@ class FilterTest extends Test {
         Assert.isFalse(iter.hasNext());
     }
     
+    public function spec__Null_filter_behaves_predictably_when_no_items_match() {
+        final arr: Array<Null<Any>> = [null, null];
+        final iter = arr.iterator().filterNonNull();
+        Assert.isFalse(iter.hasNext());
+        Assert.raises(() -> iter.next(), Exception);
+    }
+    
     public function spec__Nones_are_filtered_out() {
         final arr: Array<Option<Float>> = [None, Some(1.0), Some(-7.2), None, Some(NaN)];
         final iter = arr.iterator().filterSome();
@@ -66,5 +76,59 @@ class FilterTest extends Test {
         Assert.equals(-7.2, iter.next());
         Assert.isTrue(Math.isNaN(iter.next()));
         Assert.isFalse(iter.hasNext());
+    }
+    
+    public function spec__Option_filter_behaves_predictably_when_no_items_match() {
+        final arr: Array<Option<Any>> = [None];
+        final iter = arr.iterator().filterSome();
+        Assert.isFalse(iter.hasNext());
+        Assert.raises(() -> iter.next(), Exception);
+    }
+    
+    public function spec__Type_filter_works_with_integers() {
+        final arr: Array<Any> = ["hello", 1, 2, false, 5.6, {}, [7]];
+        final iter = arr.iterator().filterIs(Int);
+        Assert.equals(1, iter.next());
+        Assert.equals(2, iter.next());
+        Assert.isFalse(iter.hasNext());
+    }
+    
+    public function spec__Type_filter_works_with_booleans() {
+        final arr: Array<Any> = ["hello", 1, 2, false, 5.6, {}, [7]];
+        final iter = arr.iterator().filterIs(Bool);
+        Assert.equals(false, iter.next());
+        Assert.isFalse(iter.hasNext());
+    }
+    
+    public function spec__Type_filter_works_with_strings() {
+        final arr: Array<Any> = ["hello", 1, 2, false, 5.6, {}, [7]];
+        final iter = arr.iterator().filterIs(String);
+        Assert.equals("hello", iter.next());
+        Assert.isFalse(iter.hasNext());
+    }
+    
+    public function spec__Type_filter_works_with_arrays() {
+        final arr: Array<Any> = ["hello", 1, 2, false, 5.6, {}, [7]];
+        final iter = arr.iterator().filterIs(Array);
+        final item = iter.next();
+        Assert.equals(1, item.length);
+        Assert.equals(7, item[0]);
+        Assert.isFalse(iter.hasNext());
+    }
+    
+    public function spec__Type_filter_works_with_interfaces() {
+        final arr: Array<Any> = [new StringMap(), new IntMap(), new StringBuf(), ["foo" => "bar"]];
+        final iter = arr.iterator().filterIs(IMap);
+        Assert.equals(arr[0], iter.next());
+        Assert.equals(arr[1], iter.next());
+        Assert.equals(arr[3], iter.next());
+        Assert.isFalse(iter.hasNext());
+    }
+    
+    public function spec__Type_filter_behaves_predictably_when_no_items_match() {
+        final arr: Array<Any> = ["hello"];
+        final iter = arr.iterator().filterIs(Int);
+        Assert.isFalse(iter.hasNext());
+        Assert.raises(() -> iter.next(), Exception);
     }
 }
