@@ -21,6 +21,15 @@ final class Filter {
         return new IteratorFilteringIs(src, matcher);
     }
     
+    #if (haxe_ver < 4.3)
+    public static extern inline overload function filterIs<T, R>(
+        src: Iterator<T>,
+        matcher: Any
+    ): Iterator<R> {
+        return new IteratorFilteringIs(src, matcher);
+    }
+    #end
+    
     public static inline function filterNonNull<T>(src: Iterator<Null<T>>): Iterator<T> {
         return new IteratorFilteringNonNull(src);
     }
