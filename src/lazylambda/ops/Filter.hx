@@ -2,6 +2,7 @@
 package lazylambda.ops;
 
 import haxe.ds.Option;
+import haxe.extern.EitherType;
 import lazylambda.iterators.IteratorFiltering;
 import lazylambda.iterators.IteratorFilteringIs;
 import lazylambda.iterators.IteratorFilteringNonNull;
@@ -13,23 +14,9 @@ final class Filter {
         return new IteratorFiltering(src, predicate);
     }
     
-    public static extern inline overload function filterIs<T, R: {}>(
-        src: Iterator<T>,
-        matcher: Class<R>
-    ): Iterator<R> {
-        return new IteratorFilteringIs(src, matcher);
-    }
-    
-    public static extern inline overload function filterIs<T, R: {}>(
-        src: Iterator<T>,
-        matcher: Enum<R>
-    ): Iterator<R> {
-        return new IteratorFilteringIs(src, matcher);
-    }
-    
     public static extern inline overload function filterIs<T, R>(
         src: Iterator<T>,
-        matcher: Any
+        matcher: EitherType<Enum<R>, EitherType<Class<R>, Any>>
     ): Iterator<R> {
         return new IteratorFilteringIs(src, matcher);
     }
