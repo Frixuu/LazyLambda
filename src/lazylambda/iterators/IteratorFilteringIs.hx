@@ -15,35 +15,35 @@ final class IteratorFilteringIs<T, R> {
         this.nextItem = null;
     }
     
-    public function hasNext(): Bool {
+    private function ensureNextItem(): Void {
     
+        final src = this.src;
         while (this.nextItem == null) {
         
-            if (!this.src.hasNext()) {
-                return false;
+            if (!src.hasNext()) {
+                return;
             }
             
-            final item: T = this.src.next();
+            final item: T = src.next();
             if (Std.isOfType(item, this.matcher)) {
                 this.nextItem = cast item;
             }
         }
-        
-        return true;
+    }
+    
+    public function hasNext(): Bool {
+        this.ensureNextItem();
+        return this.nextItem != null;
     }
     
     public function next(): R {
-    
-        if (!this.hasNext()) {
-            throw new Exception("Iterator is empty");
+        this.ensureNextItem();
+        switch (this.nextItem) {
+            case null:
+                throw new Exception("Iterator is empty");
+            case item:
+                this.nextItem = null;
+                return item;
         }
-        
-        final item: Null<R> = this.nextItem;
-        if (item != null) {
-            this.nextItem = null;
-            return item;
-        }
-        
-        throw new Exception("Unreachable");
     }
 }

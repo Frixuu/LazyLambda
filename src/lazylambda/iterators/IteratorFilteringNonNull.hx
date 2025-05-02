@@ -13,32 +13,32 @@ final class IteratorFilteringNonNull<T> {
         this.nextItem = null;
     }
     
-    public function hasNext(): Bool {
+    private function ensureNextItem(): Void {
     
+        final src = this.src;
         while (this.nextItem == null) {
         
-            if (!this.src.hasNext()) {
-                return false;
+            if (!src.hasNext()) {
+                return;
             }
             
-            this.nextItem = this.src.next();
+            this.nextItem = src.next();
         }
-        
-        return true;
+    }
+    
+    public function hasNext(): Bool {
+        this.ensureNextItem();
+        return this.nextItem != null;
     }
     
     public function next(): T {
-    
-        if (!this.hasNext()) {
-            throw new Exception("Iterator is empty");
+        this.ensureNextItem();
+        switch (this.nextItem) {
+            case null:
+                throw new Exception("Iterator is empty");
+            case item:
+                this.nextItem = null;
+                return item;
         }
-        
-        final item: Null<T> = this.nextItem;
-        if (item != null) {
-            this.nextItem = null;
-            return item;
-        }
-        
-        throw new Exception("Unreachable");
     }
 }

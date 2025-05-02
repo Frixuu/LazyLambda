@@ -16,35 +16,35 @@ final class IteratorFiltering<T> {
         this.nextItem = None;
     }
     
-    public function hasNext(): Bool {
+    private function ensureNextItem(): Void {
     
+        final src = this.src;
         while (this.nextItem == None) {
         
-            if (!this.src.hasNext()) {
-                return false;
+            if (!src.hasNext()) {
+                return;
             }
             
-            final item: T = this.src.next();
+            final item: T = src.next();
             if (this.predicate(item)) {
                 this.nextItem = Some(item);
             }
         }
-        
-        return true;
+    }
+    
+    public function hasNext(): Bool {
+        this.ensureNextItem();
+        return this.nextItem != None;
     }
     
     public function next(): T {
-    
-        if (!this.hasNext()) {
-            throw new Exception("Iterator is empty");
-        }
-        
+        this.ensureNextItem();
         switch (this.nextItem) {
+            case None:
+                throw new Exception("Iterator is empty");
             case Some(item):
                 this.nextItem = None;
                 return item;
-            case None:
-                throw new Exception("Unreachable");
         }
     }
 }
