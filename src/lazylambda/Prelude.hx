@@ -8,3 +8,4 @@ typedef First = lazylambda.ops.First;
 typedef Fold = lazylambda.ops.Fold;
 typedef ForEach = lazylambda.ops.ForEach;
 typedef Map = lazylambda.ops.Map;
+typedef Take = lazylambda.ops.Take;
