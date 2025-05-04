@@ -13,6 +13,8 @@ jobs:
       matrix:
         haxe-version:
           - "4.2.0"
+          - "4.2.5"
+          - "4.3.0"
           - "4.3.6"
           - "latest"
     steps:
@@ -52,6 +54,8 @@ jobs:
         working-directory: "tests"
         shell: "bash"
         run: "haxe buildTests.hxml"
+        env:
+          OCAMLRUNPARAM: "b"
       - name: "Upload built suites"
         uses: "actions/upload-artifact@v4"
         with:
