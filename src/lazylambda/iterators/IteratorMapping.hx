@@ -6,16 +6,16 @@ final class IteratorMapping<T, R> {
     private final src: Iterator<T>;
     private final transform: (T) -> R;
     
-    public function new(src: Iterator<T>, transform: (T) -> R) {
+    public inline function new(src: Iterator<T>, transform: (T) -> R) {
         this.src = src;
         this.transform = transform;
     }
     
-    public function hasNext(): Bool {
+    public inline function hasNext(): Bool {
         return this.src.hasNext();
     }
     
-    public function next(): R {
+    public inline function next(): R {
         return this.transform(this.src.next());
     }
 }
