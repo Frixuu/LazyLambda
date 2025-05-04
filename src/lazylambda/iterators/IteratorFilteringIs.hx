@@ -21,7 +21,7 @@ final class IteratorFilteringIs<T, R> {
         while (this.nextItem == null) {
         
             if (!src.hasNext()) {
-                return;
+                break;
             }
             
             final item: T = src.next();

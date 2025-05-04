@@ -20,7 +20,7 @@ final class IteratorFilteringSome<T> {
         while (this.nextItem == None) {
         
             if (!src.hasNext()) {
-                return;
+                break;
             }
             
             this.nextItem = src.next();

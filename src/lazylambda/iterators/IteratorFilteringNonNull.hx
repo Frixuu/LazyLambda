@@ -19,7 +19,7 @@ final class IteratorFilteringNonNull<T> {
         while (this.nextItem == null) {
         
             if (!src.hasNext()) {
-                return;
+                break;
             }
             
             this.nextItem = src.next();

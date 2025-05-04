@@ -22,7 +22,7 @@ final class IteratorFiltering<T> {
         while (this.nextItem == None) {
         
             if (!src.hasNext()) {
-                return;
+                break;
             }
             
             final item: T = src.next();
