@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 package lazylambda.iterators;
 
-import haxe.Exception;
 import haxe.ds.Option;
+import lazylambda.NoItemsException;
 
 final class IteratorFilteringSome<T> {
 
@@ -36,7 +36,7 @@ final class IteratorFilteringSome<T> {
         this.ensureNextItem();
         switch (this.nextItem) {
             case None:
-                throw new Exception("Iterator is empty");
+                throw new NoItemsException();
             case Some(item):
                 this.nextItem = None;
                 return item;

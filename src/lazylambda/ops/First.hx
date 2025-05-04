@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: MIT
 package lazylambda.ops;
 
-import haxe.Exception;
+import lazylambda.NoItemsException;
 
 final class First {
 
     public static extern inline overload function firstOrThrow<T>(src: Iterator<T>): T {
     
         if (!src.hasNext()) {
-            throw new Exception("Iterator is empty");
+            throw new NoItemsException();
         }
         
         return src.next();
@@ -33,6 +33,6 @@ final class First {
             }
         }
         
-        throw new Exception("Iterator is empty");
+        throw new NoItemsException();
     }
 }

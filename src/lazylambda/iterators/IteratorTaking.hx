@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 package lazylambda.iterators;
 
+import lazylambda.NoItemsException;
+
 final class IteratorTaking<T> {
 
     private final src: Iterator<T>;
@@ -18,7 +20,7 @@ final class IteratorTaking<T> {
     public inline function next(): T {
     
         if (!this.hasNext()) {
-            throw new haxe.Exception("Iterator is empty");
+            throw new NoItemsException();
         }
         
         this.count -= 1;
