@@ -64,13 +64,16 @@ jobs:
           retention-days: 1
 
   hashlink:
-    name: "Hashlink (${{ matrix.hl-version }}, Windows)"
+    name: "Hashlink ${{ matrix.hl-version }} (built with ${{ matrix.haxe-version }}, Windows)"
     runs-on: "windows-latest"
     strategy:
       fail-fast: false
       matrix:
         hl-version:
           - "1.15.0"
+        haxe-version:
+          - "4.2.0"
+          - "4.3.6"
     needs:
       - "build"
     steps:
@@ -81,15 +84,54 @@ jobs:
       - name: "Download test suites"
         uses: "actions/download-artifact@v4"
         with:
-          name: "suites-4.3.6"
+          name: "suites-${{ matrix.haxe-version }}"
       - name: "Run test suite"
         shell: "bash"
         run: "hl hashlink/suite.hl"
+      - name: "Name coverage stats"
+        shell: "bash"
+        run: "mv lcov.info lcov-hashlink-${{ matrix.hl-version }}-${{ matrix.haxe-version }}.info"
       - name: "Save coverage stats as an artifact"
         uses: "actions/upload-artifact@v4"
         with:
-          name: "coverage-hashlink"
-          path: "lcov.info"
+          name: "coverage-hashlink-${{ matrix.hl-version }}-${{ matrix.haxe-version }}"
+          path: "lcov*.info"
+          if-no-files-found: "error"
+          retention-days: 1
+
+  nodejs:
+    name: "Node.js ${{ matrix.node-version }} (built with ${{ matrix.haxe-version }}, Linux)"
+    runs-on: "ubuntu-latest"
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version:
+          - "22"
+        haxe-version:
+          - "4.2.0"
+          - "4.3.6"
+    needs:
+      - "build"
+    steps:
+      - name: "Install Node.js"
+        uses: "actions/setup-node@v4"
+        with:
+          node-version: "${{ matrix.node-version }}"
+      - name: "Download test suites"
+        uses: "actions/download-artifact@v4"
+        with:
+          name: "suites-${{ matrix.haxe-version }}"
+      - name: "Run test suite"
+        shell: "bash"
+        run: "node nodejs/suite.js"
+      - name: "Name coverage stats"
+        shell: "bash"
+        run: "mv lcov.info lcov-nodejs-${{ matrix.node-version }}-${{ matrix.haxe-version }}.info"
+      - name: "Save coverage stats as an artifact"
+        uses: "actions/upload-artifact@v4"
+        with:
+          name: "coverage-nodejs-${{ matrix.node-version }}-${{ matrix.haxe-version }}"
+          path: "lcov*.info"
           if-no-files-found: "error"
           retention-days: 1
 
@@ -98,16 +140,19 @@ jobs:
     runs-on: "ubuntu-latest"
     needs:
       - "hashlink"
+      - "nodejs"
     steps:
       - name: "Checkout (for additional metadata)"
         uses: "actions/checkout@v4"
-      - name: "Download coverage stats from an artifact"
+      - name: "Download coverage stats from the artifacts"
         uses: "actions/download-artifact@v4"
         with:
-          name: "coverage-hashlink"
+          pattern: "coverage-*"
+          merge-multiple: true
       - name: "Upload code coverage report to Codecov"
         uses: "codecov/codecov-action@v5"
         with:
           token: "${{ secrets.CODECOV_TOKEN }}"
-          files: "lcov.info"
+          disable_search: false
+          files: "lcov*.info"
           fail_ci_if_error: true

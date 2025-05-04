@@ -96,7 +96,7 @@ class FilterTest extends Test {
     
     public function test__Type_filter_works_with_booleans() {
         final arr: Array<Any> = ["hello", 1, 2, false, 5.6, {}, [7]];
-        final iter: Iterator<Bool> = arr.iterator().filterIs(Bool);
+        final iter = arr.iterator().filterIs(Bool);
         Assert.equals(false, iter.next());
         Assert.isFalse(iter.hasNext());
     }
@@ -111,7 +111,7 @@ class FilterTest extends Test {
     
     public function test__Type_filter_works_with_arrays() {
         final arr: Array<Any> = ["hello", 1, 2, false, 5.6, {}, [7]];
-        final iter = arr.iterator().filterIs(Array);
+        final iter: Iterator<Array<Null<Dynamic>>> = arr.iterator().filterIs(Array);
         final item = iter.next();
         Assert.equals(1, item.length);
         Assert.equals(7, item[0]);
@@ -120,7 +120,7 @@ class FilterTest extends Test {
     
     public function test__Type_filter_works_with_interfaces() {
         final arr: Array<Any> = [new StringMap(), new IntMap(), new StringBuf(), ["foo" => "bar"]];
-        final iter = arr.iterator().filterIs(IMap);
+        final iter: Iterator<IMap<Null<Dynamic>, Null<Dynamic>>> = arr.iterator().filterIs(IMap);
         Assert.equals(arr[0], iter.next());
         Assert.equals(arr[1], iter.next());
         Assert.equals(arr[3], iter.next());

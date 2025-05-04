@@ -16,7 +16,7 @@
 
 --hl out/hashlink/suite.hl
 
-# --next
-# --library hxnodejs
-# --define js-es=6
-# --js out/nodejs/suite.js
+--next
+--library hxnodejs
+--define js-es=6
+--js out/nodejs/suite.js
