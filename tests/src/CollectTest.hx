@@ -29,7 +29,7 @@ class CollectTest extends Test {
     }
     
     public function test__Collecting_an_IntIterator_to_a_map_works() {
-        final m = (0...3).toMapBy(i -> Std.string(i), i -> i);
+        final m = (0...3).toMap(i -> Std.string(i), i -> i);
         Assert.same(["0" => 0, "1" => 1, "2" => 2], m);
     }
     
@@ -41,7 +41,7 @@ class CollectTest extends Test {
     
     public function test__Collecting_a_map_iterator_to_a_map_with_selectors_works() {
         final src = ["0" => 0, "1" => 1, "2" => 2];
-        final dst = src.keyValueIterator().toMapBy(pair -> pair.key, pair -> pair.value + 1);
+        final dst = src.keyValueIterator().toMap(pair -> pair.key, pair -> pair.value + 1);
         Assert.same(["0" => 1, "1" => 2, "2" => 3], dst);
     }
 }
