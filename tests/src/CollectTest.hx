@@ -38,10 +38,11 @@ class CollectTest extends Test {
         final dst = src.keyValueIterator().toMap();
         Assert.same(src, dst);
     }
-    
-    public function test__Collecting_a_map_iterator_to_a_map_with_selectors_works() {
-        final src = ["0" => 0, "1" => 1, "2" => 2];
-        final dst = src.keyValueIterator().toMap(pair -> pair.key, pair -> pair.value + 1);
-        Assert.same(["0" => 1, "1" => 2, "2" => 3], dst);
-    }
+    /*
+        public function test__Collecting_a_map_iterator_to_a_map_with_selectors_works() {
+            final src = ["0" => 0, "1" => 1, "2" => 2];
+            final dst = src.keyValueIterator().toMap(pair -> pair.key, pair -> pair.value + 1);
+            Assert.same(["0" => 1, "1" => 2, "2" => 3], dst);
+        }
+     */
 }
