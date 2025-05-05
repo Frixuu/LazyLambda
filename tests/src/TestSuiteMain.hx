@@ -20,6 +20,7 @@ final class TestSuiteMain {
         runner.addCase(new FoldTest());
         runner.addCase(new FirstTest());
         runner.addCase(new ForEachTest());
+        runner.addCase(new JoinTest());
         runner.addCase(new MapTest());
         runner.addCase(new TakeTest());
         
