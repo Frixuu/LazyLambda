@@ -3,15 +3,22 @@ package lazylambda.ops;
 
 final class Fold {
 
+    /**
+        Accumulates all of the source iterator's items into a single value, in order of iteration.
+        @param src The source iterator.
+        @param initial The initial accumulator value.
+        @param operation The folding function.
+        @return The final value.
+    **/
     public static inline function fold<T, R>(
         src: Iterator<T>,
         initial: R,
-        operation: (acc: R, rhs: T) -> R
+        operation: (accumulator: R, item: T) -> R
     ): R {
-        var acc: R = initial;
+        var accumulator: R = initial;
         for (item in src) {
-            acc = operation(acc, item);
+            accumulator = operation(accumulator, item);
         }
-        return acc;
+        return accumulator;
     }
 }
