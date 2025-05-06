@@ -33,12 +33,12 @@ final class IteratorFilteringNonNull<T> {
     
     public function next(): T {
         this.ensureNextItem();
-        switch (this.nextItem) {
+        return switch (this.nextItem) {
             case null:
                 throw new NoItemsException();
             case item:
                 this.nextItem = null;
-                return item;
-        }
+                item;
+        };
     }
 }

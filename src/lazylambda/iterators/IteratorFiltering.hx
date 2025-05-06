@@ -39,12 +39,12 @@ final class IteratorFiltering<T> {
     
     public function next(): T {
         this.ensureNextItem();
-        switch (this.nextItem) {
+        return switch (this.nextItem) {
             case None:
                 throw new NoItemsException();
             case Some(item):
                 this.nextItem = None;
-                return item;
-        }
+                item;
+        };
     }
 }
