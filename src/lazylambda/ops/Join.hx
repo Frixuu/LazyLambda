@@ -19,7 +19,9 @@ final class Join {
     ): String {
     
         final buffer = new StringBuf();
-        buffer.add(prefix);
+        if (prefix != "") {
+            buffer.add(prefix);
+        }
         
         while (src.hasNext()) {
             buffer.add(src.next());
@@ -28,7 +30,10 @@ final class Join {
             }
         }
         
-        buffer.add(suffix);
+        if (suffix != "") {
+            buffer.add(suffix);
+        }
+        
         return buffer.toString();
     }
 }
