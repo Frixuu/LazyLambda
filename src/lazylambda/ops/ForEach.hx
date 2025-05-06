@@ -3,13 +3,16 @@ package lazylambda.ops;
 
 final class ForEach {
 
-    public static inline function forEach<T>(src: Iterator<T>, action: (item: T) -> Void): Void {
+    public static extern inline overload function forEach<T>(
+        src: Iterator<T>,
+        action: (item: T) -> Void
+    ): Void {
         for (item in src) {
             action(item);
         }
     }
     
-    public static inline function forEachIndexed<T>(
+    public static extern inline overload function forEachIndexed<T>(
         src: Iterator<T>,
         action: (index: Int, item: T) -> Void
     ): Void {

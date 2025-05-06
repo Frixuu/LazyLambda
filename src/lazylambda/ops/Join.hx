@@ -11,7 +11,7 @@ final class Join {
         @param suffix Optional: The suffix to use.
         @return The final value.
     **/
-    public static inline function join(
+    public static extern inline overload function join(
         src: Iterator<String>,
         separator: String,
         prefix: String = "",

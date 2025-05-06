@@ -10,7 +10,10 @@ import lazylambda.iterators.IteratorFilteringSome;
 
 final class Filter {
 
-    public static inline function filter<T>(src: Iterator<T>, predicate: (T) -> Bool): Iterator<T> {
+    public static extern inline overload function filter<T>(
+        src: Iterator<T>,
+        predicate: (item: T) -> Bool
+    ): Iterator<T> {
         return new IteratorFiltering(src, predicate);
     }
     
@@ -30,11 +33,15 @@ final class Filter {
     }
     #end
     
-    public static inline function filterNonNull<T>(src: Iterator<Null<T>>): Iterator<T> {
+    public static extern inline overload function filterNonNull<T>(
+        src: Iterator<Null<T>>
+    ): Iterator<T> {
         return new IteratorFilteringNonNull(src);
     }
     
-    public static inline function filterSome<T>(src: Iterator<Option<T>>): Iterator<T> {
+    public static extern inline overload function filterSome<T>(
+        src: Iterator<Option<T>>
+    ): Iterator<T> {
         return new IteratorFilteringSome(src);
     }
 }

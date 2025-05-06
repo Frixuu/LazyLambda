@@ -11,7 +11,7 @@ final class Take {
         @param n The number of items to take.
         @return A new iterator.
     **/
-    public static inline function take<T>(src: Iterator<T>, n: Int): Iterator<T> {
+    public static extern inline overload function take<T>(src: Iterator<T>, n: Int): Iterator<T> {
         return new IteratorTaking(src, n);
     }
 }
