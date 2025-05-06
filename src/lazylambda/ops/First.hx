@@ -30,16 +30,16 @@ final class First {
         predicate: (item: T) -> Bool
     ): Option<T> {
     
-        var item: Option<T> = None;
+        var matchingItem: Option<T> = None;
         while (src.hasNext()) {
-            final candidate = src.next();
-            if (predicate(candidate)) {
-                item = Some(candidate);
+            final item: T = src.next();
+            if (predicate(item)) {
+                matchingItem = Some(item);
                 break;
             }
         }
         
-        return item;
+        return matchingItem;
     }
     
     /**
@@ -67,16 +67,16 @@ final class First {
         predicate: (item: T) -> Bool
     ): Null<T> {
     
-        var item: Null<T> = null;
+        var matchingItem: Null<T> = null;
         while (src.hasNext()) {
-            final candidate = src.next();
-            if (predicate(candidate)) {
-                item = candidate;
+            final item: T = src.next();
+            if (predicate(item)) {
+                matchingItem = item;
                 break;
             }
         }
         
-        return item;
+        return matchingItem;
     }
     
     /**

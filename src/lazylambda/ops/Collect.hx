@@ -7,7 +7,7 @@ import haxe.ds.Vector;
 final class Collect {
 
     /**
-        Drains the source iterator, collecting all of its items into an `Array`.
+        Collects all of the source iterator's items into an `Array`.
         @param src The source iterator.
         @return A new array.
     **/
@@ -16,7 +16,7 @@ final class Collect {
     }
     
     /**
-        Drains the source iterator, collecting all of its items into a `Vector`.
+        Collects all of the source iterator's items into a `Vector`.
         @param src The source iterator.
         @return A new vector.
     **/
@@ -26,7 +26,7 @@ final class Collect {
     }
     
     /**
-        Drains the source iterator, collecting all of its items into a `List`.
+        Collects all of the source iterator's items into a `List`.
         @param src The source iterator.
         @return A new linked list.
     **/
@@ -39,7 +39,7 @@ final class Collect {
     }
     
     /**
-        Drains the source iterator, collecting all of its items into a `Map`.
+        Collects all of the source iterator's items into a `Map`.
         @param src The source iterator.
         @return A new map.
     **/
@@ -51,7 +51,7 @@ final class Collect {
     }
     
     /**
-        Drains the source iterator, collecting all of its items into a `Map`.
+        Collects all of the source iterator's items into a `Map`.
         @param src The source iterator.
         @param keySelector A function that produces a key for each item.
         @param valueSelector A function that produces a value for each item.

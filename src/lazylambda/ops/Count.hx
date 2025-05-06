@@ -3,6 +3,11 @@ package lazylambda.ops;
 
 final class Count {
 
+    /**
+        Returns the number of items in the source iterator.
+        @param src The source iterator.
+        @return The number of items.
+    **/
     public static extern inline overload function count<T>(src: Iterator<T>): Int {
         var count: Int = 0;
         for (item in src) {
@@ -11,9 +16,15 @@ final class Count {
         return count;
     }
     
+    /**
+        Returns the number of items in the source iterator that match the given predicate.
+        @param src The source iterator.
+        @param predicate The predicate to match.
+        @return The number of items.
+    **/
     public static extern inline overload function count<T>(
         src: Iterator<T>,
-        predicate: (T) -> Bool
+        predicate: (item: T) -> Bool
     ): Int {
         var count: Int = 0;
         for (item in src) {
