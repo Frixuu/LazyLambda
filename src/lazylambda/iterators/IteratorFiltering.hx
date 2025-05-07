@@ -4,13 +4,14 @@ package lazylambda.iterators;
 import haxe.ds.Option;
 import lazylambda.NoItemsException;
 
-final class IteratorFiltering<T> {
+@:generic
+final class IteratorFiltering<S: Iterator<T>, T> implements IIterator<T> {
 
-    private final src: Iterator<T>;
+    private final src: S;
     private final predicate: (T) -> Bool;
     private var nextItem: Option<T>;
     
-    public function new(src: Iterator<T>, predicate: (T) -> Bool) {
+    public function new(src: S, predicate: (T) -> Bool) {
         this.src = src;
         this.predicate = predicate;
         this.nextItem = None;

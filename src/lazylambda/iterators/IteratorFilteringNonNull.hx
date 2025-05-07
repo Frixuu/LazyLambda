@@ -3,12 +3,13 @@ package lazylambda.iterators;
 
 import lazylambda.NoItemsException;
 
-final class IteratorFilteringNonNull<T> {
+@:generic
+final class IteratorFilteringNonNull<S: Iterator<Null<T>>, T> implements IIterator<T> {
 
-    private final src: Iterator<Null<T>>;
+    private final src: S;
     private var nextItem: Null<T>;
     
-    public function new(src: Iterator<Null<T>>) {
+    public function new(src: S) {
         this.src = src;
         this.nextItem = null;
     }
@@ -26,7 +27,7 @@ final class IteratorFilteringNonNull<T> {
         }
     }
     
-    public function hasNext(): Bool {
+    public inline function hasNext(): Bool {
         this.ensureNextItem();
         return this.nextItem != null;
     }

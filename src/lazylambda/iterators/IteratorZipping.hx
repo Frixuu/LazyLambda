@@ -4,12 +4,14 @@ package lazylambda.iterators;
 import lazylambda.NoItemsException;
 import lazylambda.ds.Pair;
 
-final class IteratorZipping<T, U> {
-
-    private final left: Iterator<T>;
-    private final right: Iterator<U>;
+@:generic
+final class IteratorZipping<ST: Iterator<T>, T, SU: Iterator<U>, U>
+    implements IIterator<Pair<T, U>> {
     
-    public inline function new(left: Iterator<T>, right: Iterator<U>) {
+    private final left: ST;
+    private final right: SU;
+    
+    public inline function new(left: ST, right: SU) {
         this.left = left;
         this.right = right;
     }

@@ -134,6 +134,22 @@
           "type": "noWrap"
         }
       ]
+    },
+    "implementsExtends": {
+      "defaultAdditionalIndent": 1,
+      "defaultWrap": "onePerLine",
+      "defaultLocation": "afterLast",
+      "rules": [
+        {
+          "conditions": [
+            {
+              "cond": "lineLength <= n",
+              "value": 100
+            }
+          ],
+          "type": "noWrap"
+        }
+      ]
     }
   }
 }

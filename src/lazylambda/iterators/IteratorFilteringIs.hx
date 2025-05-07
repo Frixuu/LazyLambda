@@ -3,13 +3,14 @@ package lazylambda.iterators;
 
 import lazylambda.NoItemsException;
 
-final class IteratorFilteringIs<T, R> {
+@:generic
+final class IteratorFilteringIs<S: Iterator<T>, T, R> implements IIterator<R> {
 
-    private final src: Iterator<T>;
+    private final src: S;
     private final matcher: Any;
     private var nextItem: Null<R>;
     
-    public function new(src: Iterator<T>, matcher: Any) {
+    public function new(src: S, matcher: Any) {
         this.src = src;
         this.matcher = matcher;
         this.nextItem = null;

@@ -3,12 +3,13 @@ package lazylambda.iterators;
 
 import lazylambda.NoItemsException;
 
-final class IteratorTaking<T> {
+@:generic
+final class IteratorTaking<S: Iterator<T>, T> implements IIterator<T> {
 
-    private final src: Iterator<T>;
+    private final src: S;
     private var count: Int;
     
-    public inline function new(src: Iterator<T>, count: Int) {
+    public inline function new(src: S, count: Int) {
         this.src = src;
         this.count = count;
     }
