@@ -11,6 +11,19 @@
       }
     },
     {
+      "type": "Dynamic",
+      "props": {
+        "severity": "ERROR"
+      }
+    },
+    {
+      "type": "CodeSimilarity",
+      "props": {
+        "severity": "IGNORE",
+        "severityIdentical": "IGNORE"
+      }
+    },
+    {
       "type": "ModifierOrder",
       "props": {
         "severity": "ERROR",
@@ -26,16 +39,25 @@
       }
     },
     {
+      "type": "HiddenField",
+      "props": {
+        "severity": "ERROR",
+        "ignoreSetter": false,
+        "ignoreFormat": "^$",
+        "ignoreConstructorParameter": true
+      }
+    },
+    {
       "type": "EmptyPackage",
       "props": {
-        "enforceEmptyPackage": true,
-        "severity": "ERROR"
+        "severity": "ERROR",
+        "enforceEmptyPackage": true
       }
     },
     {
       "type": "Final",
       "props": {
-        "severity": "IGNORE"
+        "severity": "WARNING"
       }
     },
     {
@@ -67,6 +89,19 @@
       }
     },
     {
+      "type": "UnusedImport",
+      "props": {
+        "severity": "WARNING",
+        "ignoreModules": []
+      }
+    },
+    {
+      "type": "AvoidStarImport",
+      "props": {
+        "severity": "ERROR"
+      }
+    },
+    {
       "type": "EmptyBlock",
       "props": {
         "tokens": [
@@ -92,6 +127,13 @@
       "type": "DefaultComesLast",
       "props": {
         "severity": "ERROR"
+      }
+    },
+    {
+      "type": "NullableParameter",
+      "props": {
+        "severity": "WARNING",
+        "option": "questionMark"
       }
     },
     {
@@ -124,6 +166,12 @@
       "type": "UnusedLocalVar"
     },
     {
+      "type": "VarTypeHint",
+      "props": {
+        "severity": "IGNORE"
+      }
+    },
+    {
       "type": "DocCommentStyle",
       "props": {
         "lineStyle": "none",
@@ -153,7 +201,7 @@
     {
       "type": "FieldDocComment",
       "props": {
-        "severity": "IGNORE",
+        "severity": "WARNING",
         "requireParams": true,
         "fieldType": "BOTH",
         "requireReturn": true,
@@ -166,7 +214,7 @@
           "TYPEDEF_DEF"
         ],
         "modifier": "PUBLIC",
-        "excludeNames": ["new", "toString"]
+        "excludeNames": ["hasNext", "new", "next", "toString"]
       }
     },
     {
@@ -178,18 +226,49 @@
       }
     },
     {
-      "type": "UnnecessaryConstructor",
+      "type": "Trace",
+      "props": {
+        "severity": "ERROR"
+      }
+    },
+    {
+      "type": "PublicAccessor",
       "props": {
         "severity": "IGNORE"
       }
     },
     {
+      "type": "MultipleVariableDeclarations",
+      "props": {
+        "severity": "WARNING"
+      }
+    },
+    {
+      "type": "UnnecessaryConstructor",
+      "props": {
+        "severity": "INFO"
+      }
+    },
+    {
+      "type": "AvoidTernaryOperator",
+      "props": {
+        "severity": "ERROR"
+      }
+    },
+    {
       "type": "Return",
       "props": {
-        "severity": "IGNORE",
+        "severity": "INFO",
         "allowEmptyReturn": true,
-        "enforceReturnType": false,
+        "enforceReturnType": true,
         "enforceReturnTypeForAnonymous": false
+      }
+    },
+    {
+      "type": "ReturnCount",
+      "props": {
+        "severity": "INFO",
+        "max": 2
       }
     },
     {
@@ -218,6 +297,58 @@
       "type": "ArrayLiteral",
       "props": {
         "severity": "ERROR"
+      }
+    },
+    {
+      "type": "WhitespaceAfter",
+      "props": {
+        "severity": "WARNING",
+        "tokens": [",", ";"]
+      }
+    },
+    {
+      "type": "TypeName",
+      "props": {
+        "severity": "ERROR",
+        "format": "^[A-Z]+[a-zA-Z0-9]*$",
+        "tokens": ["CLASS", "ENUM", "TYPEDEF"]
+      }
+    },
+    {
+      "type": "TypeName",
+      "props": {
+        "severity": "ERROR",
+        "format": "^I[A-Z]+[a-zA-Z0-9]*$",
+        "tokens": ["INTERFACE"]
+      }
+    },
+    {
+      "type": "ParameterName",
+      "props": {
+        "severity": "ERROR",
+        "format": "^[a-z][a-zA-Z0-9]*$"
+      }
+    },
+    {
+      "type": "MethodName",
+      "props": {
+        "severity": "ERROR",
+        "format": "^[a-z][a-zA-Z0-9]*$",
+        "tokens": ["PUBLIC", "PRIVATE"]
+      }
+    },
+    {
+      "type": "LocalVariableName",
+      "props": {
+        "severity": "ERROR",
+        "format": "^_?[a-z][a-zA-Z0-9]*$"
+      }
+    },
+    {
+      "type": "WhitespaceAround",
+      "props": {
+        "severity": "WARNING",
+        "tokens": ["=", "+"]
       }
     },
     {
