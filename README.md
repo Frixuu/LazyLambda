@@ -1,13 +1,23 @@
-# LazyLambda
+<!-- markdownlint-disable no-inline-html -->
 
-![License](https://img.shields.io/github/license/Frixuu/LazyLambda?color=blue)
-![Lint status](https://img.shields.io/github/actions/workflow/status/Frixuu/LazyLambda/lint.yml?label=lint)
-![Build status](https://img.shields.io/github/actions/workflow/status/Frixuu/LazyLambda/test.yml?label=build)
-[![Coverage](https://img.shields.io/codecov/c/github/Frixuu/LazyLambda?token=KnvBAvUChN)](https://codecov.io/gh/Frixuu/LazyLambda)
+<h1 align="center">
+    <img width="90px" src="https://raw.githubusercontent.com/Frixuu/LazyLambda/trunk/media/logo.webp" alt="Logo">
+    <br>
+    <span>LazyLambda</span>
+</h1>
 
-Functional iterators library for Haxe 4.2 and later.
+<p align="center">Functional iterators library for Haxe 4.2 and later.</p>
 
-Usage:
+<p align="center">
+    <img src="https://img.shields.io/github/license/Frixuu/LazyLambda?color=blue" height="20" alt="License">
+    <img src="https://img.shields.io/github/actions/workflow/status/Frixuu/LazyLambda/lint.yml?label=lint" height="20" alt="Lint status">
+    <img src="https://img.shields.io/github/actions/workflow/status/Frixuu/LazyLambda/test.yml?label=build" height="20" alt="Build status">
+    <a href="https://codecov.io/gh/Frixuu/LazyLambda">
+        <img src="https://img.shields.io/codecov/c/github/Frixuu/LazyLambda?token=KnvBAvUChN" height="20" alt="Code coverage %">
+    </a>
+</p>
+
+## How to use
 
 ```haxe
 using lazylambda.Prelude;
