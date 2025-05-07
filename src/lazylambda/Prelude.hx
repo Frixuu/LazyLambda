@@ -11,3 +11,4 @@ typedef Join = lazylambda.ops.Join;
 typedef Map = lazylambda.ops.Map;
 typedef Reduce = lazylambda.ops.Reduce;
 typedef Take = lazylambda.ops.Take;
+typedef Zip = lazylambda.ops.Zip;
