@@ -22,6 +22,7 @@ final class TestSuiteMain {
         runner.addCase(new ForEachTest());
         runner.addCase(new JoinTest());
         runner.addCase(new MapTest());
+        runner.addCase(new ReduceTest());
         runner.addCase(new TakeTest());
         
         Report.create(runner);
