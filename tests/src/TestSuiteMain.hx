@@ -16,6 +16,7 @@ final class TestSuiteMain {
         
         runner.addCase(new CollectTest());
         runner.addCase(new CountTest());
+        runner.addCase(new DistinctTest());
         runner.addCase(new FilterTest());
         runner.addCase(new FoldTest());
         runner.addCase(new FirstTest());

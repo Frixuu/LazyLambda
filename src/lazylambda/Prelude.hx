@@ -3,6 +3,7 @@ package lazylambda;
 
 typedef Collect = lazylambda.ops.Collect;
 typedef Count = lazylambda.ops.Count;
+typedef Distinct = lazylambda.ops.Distinct;
 typedef Filter = lazylambda.ops.Filter;
 typedef First = lazylambda.ops.First;
 typedef Fold = lazylambda.ops.Fold;
