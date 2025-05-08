@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 package lazylambda.ops;
 
+import lazylambda.iterators.IIterator;
 import lazylambda.iterators.IteratorTaking;
 
 final class Take {
@@ -11,7 +12,11 @@ final class Take {
         @param n The number of items to take.
         @return A new iterator.
     **/
-    public static extern inline overload function take<T>(src: Iterator<T>, n: Int): Iterator<T> {
+    @:generic
+    public static extern inline overload function take<S: Iterator<T>, T>(
+        src: S,
+        n: Int
+    ): IIterator<T> {
         return new IteratorTaking(src, n);
     }
 }

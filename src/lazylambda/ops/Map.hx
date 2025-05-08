@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 package lazylambda.ops;
 
+import lazylambda.iterators.IIterator;
 import lazylambda.iterators.IteratorMapping;
 import lazylambda.iterators.IteratorValues;
 
@@ -12,10 +13,11 @@ final class Map {
         @param transform The function to apply.
         @return A new iterator.
     **/
-    public static extern inline overload function map<T, R>(
-        src: Iterator<T>,
+    @:generic
+    public static extern inline overload function map<S: Iterator<T>, T, R>(
+        src: S,
         transform: (T) -> R
-    ): Iterator<R> {
+    ): IIterator<R> {
         return new IteratorMapping(src, transform);
     }
     
@@ -24,9 +26,10 @@ final class Map {
         @param src The source iterator.
         @return A new iterator.
     **/
-    public static extern inline overload function values<K, V>(
-        src: KeyValueIterator<K, V>
-    ): Iterator<V> {
+    @:generic
+    public static extern inline overload function values<S: KeyValueIterator<K, V>, K, V>(
+        src: S
+    ): IIterator<V> {
         return new IteratorValues(src);
     }
 }

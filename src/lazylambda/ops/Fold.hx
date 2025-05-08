@@ -10,8 +10,9 @@ final class Fold {
         @param operation The folding function.
         @return The final value.
     **/
-    public static extern inline overload function fold<T, R>(
-        src: Iterator<T>,
+    @:generic
+    public static extern inline overload function fold<S: Iterator<T>, T, R>(
+        src: S,
         initial: R,
         operation: (accumulator: R, item: T) -> R
     ): R {

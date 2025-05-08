@@ -12,8 +12,9 @@ final class Reduce {
         @param operation The folding function.
         @return The final value or `None` if the source iterator is empty.
     **/
-    public static extern inline overload function reduce<T>(
-        src: Iterator<T>,
+    @:generic
+    public static extern inline overload function reduce<S: Iterator<T>, T>(
+        src: S,
         operation: (accumulator: T, item: T) -> T
     ): Option<T> {
     
@@ -34,8 +35,9 @@ final class Reduce {
         @param operation The folding function.
         @return The final value or `null` if the source iterator is empty.
     **/
-    public static extern inline overload function reduceOrNull<T>(
-        src: Iterator<T>,
+    @:generic
+    public static extern inline overload function reduceOrNull<S: Iterator<T>, T>(
+        src: S,
         operation: (accumulator: T, item: T) -> T
     ): Null<T> {
     
@@ -57,8 +59,9 @@ final class Reduce {
         @return The final value.
         @throws NoItemsException if the source iterator is empty.
     **/
-    public static extern inline overload function reduceOrThrow<T>(
-        src: Iterator<T>,
+    @:generic
+    public static extern inline overload function reduceOrThrow<S: Iterator<T>, T>(
+        src: S,
         operation: (accumulator: T, item: T) -> T
     ): T {
     

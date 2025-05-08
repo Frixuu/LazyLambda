@@ -3,6 +3,7 @@ package lazylambda.ops;
 
 import haxe.ds.Option;
 import haxe.extern.EitherType;
+import lazylambda.iterators.IIterator;
 import lazylambda.iterators.IteratorFiltering;
 import lazylambda.iterators.IteratorFilteringIs;
 import lazylambda.iterators.IteratorFilteringNonNull;
@@ -16,10 +17,11 @@ final class Filter {
         @param predicate The predicate to match.
         @return A new iterator.
     **/
-    public static extern inline overload function filter<T>(
-        src: Iterator<T>,
+    @:generic
+    public static extern inline overload function filter<S: Iterator<T>, T>(
+        src: S,
         predicate: (item: T) -> Bool
-    ): Iterator<T> {
+    ): IIterator<T> {
         return new IteratorFiltering(src, predicate);
     }
     
@@ -33,10 +35,10 @@ final class Filter {
                        Abstracts, e.g. `haxe.Int64`, are not supported.
         @return A new iterator.
     **/
-    public static extern inline overload function filterIs<T, R>(
-        src: Iterator<T>,
+    public static extern inline overload function filterIs<S: Iterator<T>, T, R>(
+        src: S,
         matcher: EitherType<Enum<R>, EitherType<Class<R>, Any>>
-    ): Iterator<R> {
+    ): IIterator<R> {
         return new IteratorFilteringIs(src, matcher);
     }
     
@@ -52,10 +54,10 @@ final class Filter {
                        Abstracts, e.g. `haxe.Int64`, are not supported.
         @return A new iterator.
     **/
-    public static extern inline overload function filterIs<T, R>(
-        src: Iterator<T>,
+    public static extern inline overload function filterIs<S: Iterator<T>, T, R>(
+        src: S,
         matcher: Any
-    ): Iterator<R> {
+    ): IIterator<R> {
         return new IteratorFilteringIs(src, matcher);
     }
     #end
@@ -65,9 +67,10 @@ final class Filter {
         @param src The source iterator.
         @return A new iterator.
     **/
-    public static extern inline overload function filterNonNull<T>(
-        src: Iterator<Null<T>>
-    ): Iterator<T> {
+    @:generic
+    public static extern inline overload function filterNonNull<S: Iterator<Null<T>>, T>(
+        src: S
+    ): IIterator<T> {
         return new IteratorFilteringNonNull(src);
     }
     
@@ -76,9 +79,10 @@ final class Filter {
         @param src The source iterator.
         @return A new iterator.
     **/
-    public static extern inline overload function filterSome<T>(
-        src: Iterator<Option<T>>
-    ): Iterator<T> {
+    @:generic
+    public static extern inline overload function filterSome<S: Iterator<Option<T>>, T>(
+        src: S
+    ): IIterator<T> {
         return new IteratorFilteringSome(src);
     }
 }

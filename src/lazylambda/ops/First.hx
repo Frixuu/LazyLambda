@@ -11,7 +11,7 @@ final class First {
         @param src The source iterator.
         @return The first item of source, or `None` if the source iterator was empty.
     **/
-    public static extern inline overload function first<T>(src: Iterator<T>): Option<T> {
+    public static extern inline overload function first<S: Iterator<T>, T>(src: S): Option<T> {
         return if (!src.hasNext()) {
             None;
         } else {
@@ -25,8 +25,8 @@ final class First {
         @param predicate The condition to match.
         @return The first matching item of source, or `None` if there was none.
     **/
-    public static extern inline overload function first<T>(
-        src: Iterator<T>,
+    public static extern inline overload function first<S: Iterator<T>, T>(
+        src: S,
         predicate: (item: T) -> Bool
     ): Option<T> {
     
@@ -47,7 +47,7 @@ final class First {
         @param src The source iterator.
         @return The first item of source, or `null` if the source iterator was empty.
     **/
-    public static extern inline overload function firstOrNull<T>(src: Iterator<T>): Null<T> {
+    public static extern inline overload function firstOrNull<S: Iterator<T>, T>(src: S): Null<T> {
     
         if (!src.hasNext()) {
             return null;
@@ -62,8 +62,8 @@ final class First {
         @param predicate The condition to match.
         @return The first matching item of source, or `null` if there was none.
     **/
-    public static extern inline overload function firstOrNull<T>(
-        src: Iterator<T>,
+    public static extern inline overload function firstOrNull<S: Iterator<T>, T>(
+        src: S,
         predicate: (item: T) -> Bool
     ): Null<T> {
     
@@ -85,7 +85,7 @@ final class First {
         @return The first item of source.
         @throws NoItemsException The source iterator was empty.
     **/
-    public static extern inline overload function firstOrThrow<T>(src: Iterator<T>): T {
+    public static extern inline overload function firstOrThrow<S: Iterator<T>, T>(src: S): T {
     
         if (!src.hasNext()) {
             throw new NoItemsException();
@@ -101,8 +101,8 @@ final class First {
         @return The first matching item of source.
         @throws NoItemsException The source iterator had no matching items.
     **/
-    public static extern inline overload function firstOrThrow<T>(
-        src: Iterator<T>,
+    public static extern inline overload function firstOrThrow<S: Iterator<T>, T>(
+        src: S,
         predicate: (item: T) -> Bool
     ): T {
         return switch (first(src, predicate)) {

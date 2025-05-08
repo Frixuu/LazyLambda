@@ -2,6 +2,7 @@
 package lazylambda.ops;
 
 import lazylambda.ds.Pair;
+import lazylambda.iterators.IIterator;
 import lazylambda.iterators.IteratorZipping;
 
 final class Zip {
@@ -14,10 +15,11 @@ final class Zip {
         @param right The right iterator.
         @return A new iterator.
     **/
-    public static extern inline overload function zip<T, U>(
-        left: Iterator<T>,
-        right: Iterator<U>
-    ): Iterator<Pair<T, U>> {
+    @:generic
+    public static extern inline overload function zip<ST: Iterator<T>, T, SU: Iterator<U>, U>(
+        left: ST,
+        right: SU
+    ): IIterator<Pair<T, U>> {
         return new IteratorZipping(left, right);
     }
 }

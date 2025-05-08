@@ -11,7 +11,8 @@ final class Collect {
         @param src The source iterator.
         @return A new array.
     **/
-    public static extern inline overload function toArray<T>(src: Iterator<T>): Array<T> {
+    @:generic
+    public static extern inline overload function toArray<S: Iterator<T>, T>(src: S): Array<T> {
         return [for (item in src) item];
     }
     
@@ -20,7 +21,8 @@ final class Collect {
         @param src The source iterator.
         @return A new vector.
     **/
-    public static extern inline overload function toVector<T>(src: Iterator<T>): Vector<T> {
+    @:generic
+    public static extern inline overload function toVector<S: Iterator<T>, T>(src: S): Vector<T> {
         // We need to know the size beforehand anyway
         return Vector.fromArrayCopy(toArray(src));
     }
@@ -30,7 +32,8 @@ final class Collect {
         @param src The source iterator.
         @return A new linked list.
     **/
-    public static extern inline overload function toList<T>(src: Iterator<T>): List<T> {
+    @:generic
+    public static extern inline overload function toList<S: Iterator<T>, T>(src: S): List<T> {
         final list = new List<T>();
         while (src.hasNext()) {
             list.add(src.next());
@@ -44,8 +47,8 @@ final class Collect {
         @return A new map.
     **/
     @:generic
-    public static extern inline overload function toMap<K, V>(
-        src: KeyValueIterator<K, V>
+    public static extern inline overload function toMap<S: KeyValueIterator<K, V>, K, V>(
+        src: S
     ): haxe.ds.Map<K, V> {
         return [for (key => value in src) key => value];
     }
@@ -58,8 +61,8 @@ final class Collect {
         @return A new map.
     **/
     @:generic
-    public static extern inline overload function toMapWith<T, K, V>(
-        src: Iterator<T>,
+    public static extern inline overload function toMapWith<S: Iterator<T>, T, K, V>(
+        src: S,
         keySelector: (T) -> K,
         valueSelector: (T) -> V
     ): haxe.ds.Map<K, V> {

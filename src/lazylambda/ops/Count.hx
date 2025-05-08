@@ -8,7 +8,7 @@ final class Count {
         @param src The source iterator.
         @return The number of items.
     **/
-    public static extern inline overload function count<T>(src: Iterator<T>): Int {
+    public static extern inline overload function count<S: Iterator<T>, T>(src: S): Int {
         var count: Int = 0;
         for (item in src) {
             count += 1;
@@ -22,8 +22,8 @@ final class Count {
         @param predicate The predicate to match.
         @return The number of items.
     **/
-    public static extern inline overload function count<T>(
-        src: Iterator<T>,
+    public static extern inline overload function count<S: Iterator<T>, T>(
+        src: S,
         predicate: (item: T) -> Bool
     ): Int {
         var count: Int = 0;

@@ -8,12 +8,13 @@ final class ForEach {
         @param src The source iterator.
         @param action The function to run.
     **/
-    public static extern inline overload function forEach<T>(
-        src: Iterator<T>,
+    @:generic
+    public static extern inline overload function forEach<S: Iterator<T>, T>(
+        src: S,
         action: (item: T) -> Void
     ): Void {
-        for (item in src) {
-            action(item);
+        while (src.hasNext()) {
+            action(src.next());
         }
     }
     
@@ -22,13 +23,14 @@ final class ForEach {
         @param src The source iterator.
         @param action The function to run.
     **/
-    public static extern inline overload function forEachIndexed<T>(
-        src: Iterator<T>,
+    @:generic
+    public static extern inline overload function forEachIndexed<S: Iterator<T>, T>(
+        src: S,
         action: (index: Int, item: T) -> Void
     ): Void {
         var index: Int = 0;
-        for (item in src) {
-            action(index, item);
+        while (src.hasNext()) {
+            action(index, src.next());
             index += 1;
         }
     }
