@@ -14,9 +14,27 @@
 
 --each
 
+--library hashlink
 --hl out/hashlink/suite.hl
 
 --next
 --library hxnodejs
 --define js-es=6
 --js out/nodejs/suite.js
+
+--next
+--library hxcpp
+--define no-compilation
+--cpp out/cpp/
+
+--next
+--library hxjava
+--jvm out/java/suite.jar
+
+--next
+--define lua-vanilla
+--define lua-ver=5.1
+--lua out/lua/suite.lua
+
+--next
+--python out/python/suite.py
