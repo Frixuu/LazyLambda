@@ -2,61 +2,49 @@
 package lazylambda.ds;
 
 /**
-    A red-black tree,
+    A set backed by a red-black tree,
     with only a minimal subset of its methods implemented.
 **/
 @:generic
-final class RbTree<T> {
+final class RbTreeSet<T> {
 
     private final comparator: (T, T) -> Int;
-    private final sentinel: Node<T>;
-    private var root: Node<T>;
+    private var root: Null<Node<T>>;
     
     public function new(comparator: (T, T) -> Int) {
-    
-        this.sentinel = {
-            final node: Node<T> = new Node(null, null);
-            node.color = Black;
-            node;
-        };
-        
-        this.root = this.sentinel;
+        this.root = null;
         this.comparator = comparator;
     }
     
     /**
-        Inserts a given value to this tree.
+        Inserts a given value to this tree set,
+        if no equivalent value has been inserted before.
         @param value The value to insert.
-        @param onlyIfAbsent If `true`, the value will only be inserted
-        if an equivalent value has not been inserted before.
         @return `true` if the value was inserted, `false` otherwise.
     **/
-    public function insert(value: T, onlyIfAbsent: Bool): Bool {
-    
+    public function insert(value: T): Bool {
         var newParent: Null<Node<T>> = null;
-        var tmp: Node<T> = this.root;
+        var tmp: Null<Node<T>> = this.root;
         
-        while (tmp != this.sentinel) {
+        while (tmp != null) {
             newParent = tmp;
             final comparison = this.comparator(value, tmp.value);
             if (comparison < 0) {
                 tmp = tmp.left;
             } else if (comparison > 0) {
                 tmp = tmp.right;
-            } else if (!onlyIfAbsent) {
-                tmp = tmp.right;
             } else {
                 return false;
             }
         }
         
-        final node: Node<T> = new Node(value, this.sentinel);
+        final node: Node<T> = new Node(value);
         node.parent = newParent;
         if (newParent == null) {
             this.root = node;
             node.color = Black;
         } else {
-            final comparison = this.comparator(value, tmp.value);
+            final comparison = this.comparator(value, newParent.value);
             if (comparison < 0) {
                 newParent.left = node;
             } else {
@@ -71,10 +59,10 @@ final class RbTree<T> {
     private function postInsert(node: Node<T>): Void {
     
         var tmp: Null<Node<T>> = null;
-        while (node.parent.color == Red) {
+        while (node.parent != null && node.parent.color == Red) {
             if (node.parent == node.parent.parent.right) {
                 tmp = node.parent.parent.left;
-                if (tmp.color == Red) {
+                if (tmp != null && tmp.color == Red) {
                     tmp.color = Black;
                     node.parent.color = Black;
                     node.parent.parent.color = Red;
@@ -90,7 +78,7 @@ final class RbTree<T> {
                 }
             } else {
                 tmp = node.parent.parent.right;
-                if (tmp.color == Red) {
+                if (tmp != null && tmp.color == Red) {
                     tmp.color = Black;
                     node.parent.color = Black;
                     node.parent.parent.color = Red;
@@ -117,7 +105,7 @@ final class RbTree<T> {
     private function leftRotate(node: Node<T>): Void {
         final tmp: Node<T> = node.right;
         node.right = tmp.left;
-        if (tmp.left != this.sentinel) {
+        if (tmp.left != null) {
             tmp.left.parent = node;
         }
         tmp.parent = node.parent;
@@ -135,7 +123,7 @@ final class RbTree<T> {
     private function rightRotate(node: Node<T>): Void {
         final tmp: Node<T> = node.left;
         node.left = tmp.right;
-        if (tmp.right != this.sentinel) {
+        if (tmp.right != null) {
             tmp.right.parent = node;
         }
         tmp.parent = node.parent;
@@ -155,35 +143,35 @@ final class RbTree<T> {
 private final class Node<T> {
 
     /**
+        The data stored in this node.
+    **/
+    public final value: T;
+    
+    /**
         The color of this node.
     **/
     public var color: Color;
     
     /**
-        The data stored in this node.
-    **/
-    public var value: Null<T>;
-    
-    /**
         The left child of this node.
     **/
-    public var left: Node<T>;
+    public var left: Null<Node<T>>;
     
     /**
         The right child of this node.
     **/
-    public var right: Node<T>;
+    public var right: Null<Node<T>>;
     
     /**
         A reference to the parent of this node.
     **/
     public var parent: Null<Node<T>>;
     
-    public function new(value: Null<T>, sentinel: Node<T>) {
+    public function new(value: T) {
         this.value = value;
         this.color = Red;
-        this.left = sentinel;
-        this.right = sentinel;
+        this.left = null;
+        this.right = null;
         this.parent = null;
     }
 }

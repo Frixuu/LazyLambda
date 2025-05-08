@@ -150,6 +150,11 @@
           "type": "noWrap"
         }
       ]
+    },
+    "typeParameter": {
+      "defaultAdditionalIndent": 1,
+      "defaultWrap": "keep",
+      "defaultLocation": "beforeLast"
     }
   }
 }

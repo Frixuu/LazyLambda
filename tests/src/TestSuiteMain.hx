@@ -24,6 +24,7 @@ final class TestSuiteMain {
         runner.addCase(new JoinTest());
         runner.addCase(new MapTest());
         runner.addCase(new ReduceTest());
+        runner.addCase(new SortTest());
         runner.addCase(new TakeTest());
         runner.addCase(new ZipTest());
         
