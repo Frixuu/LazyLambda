@@ -42,8 +42,8 @@ final class Filter {
         return new IteratorFilteringIs(src, matcher);
     }
     
-    #if (haxe_ver < 4.3) // On 4.2.5 and lower, e.g. Abstract<Int> cannot unify through EitherType
-    
+    #if (haxe < version("4.3.0"))
+    /* On 4.2.5 and lower, e.g. Abstract<Int> cannot unify through EitherType */
     /**
         Filters the source iterator, yielding only items that are of the specified type.
         @param src The source iterator.

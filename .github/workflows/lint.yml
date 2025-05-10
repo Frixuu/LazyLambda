@@ -12,7 +12,7 @@ jobs:
       - name: "Install Haxe"
         uses: "krdlab/setup-haxe@v1"
         with:
-          haxe-version: "4.3.6"
+          haxe-version: "4.3.7"
       - name: "Get Haxelib local repository path"
         id: "haxelib-get-path"
         shell: "bash"
@@ -45,7 +45,7 @@ jobs:
       - name: "Install Haxe"
         uses: "krdlab/setup-haxe@v1"
         with:
-          haxe-version: "4.3.6"
+          haxe-version: "4.3.7"
       - name: "Get Haxelib local repository path"
         id: "haxelib-get-path"
         shell: "bash"

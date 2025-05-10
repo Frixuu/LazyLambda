@@ -15,7 +15,7 @@ jobs:
           - "4.2.0"
           - "4.2.5"
           - "4.3.0"
-          - "4.3.6"
+          - "4.3.7"
           - "latest"
     steps:
       - name: "Install Haxe"
@@ -73,7 +73,8 @@ jobs:
           - "1.15.0"
         haxe-version:
           - "4.2.0"
-          - "4.3.6"
+          - "4.3.7"
+          - "latest"
     needs:
       - "build"
     steps:
@@ -109,7 +110,8 @@ jobs:
           - "22"
         haxe-version:
           - "4.2.0"
-          - "4.3.6"
+          - "4.3.7"
+          - "latest"
     needs:
       - "build"
     steps:
