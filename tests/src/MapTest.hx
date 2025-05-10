@@ -27,6 +27,16 @@ class MapTest extends Test {
         Assert.isFalse(iter.hasNext());
     }
     
+    public function test__Mapping_non_null_values_works() {
+    
+        final iter = (1...10).mapNonNull(i -> (i % 2 == 0) ? (i + 1.5) : null);
+        Assert.equals(3.5, iter.next());
+        Assert.equals(5.5, iter.next());
+        Assert.equals(7.5, iter.next());
+        Assert.equals(9.5, iter.next());
+        Assert.isFalse(iter.hasNext());
+    }
+    
     public function test__Values_can_be_extracted() {
     
         final map = ["foo" => 1, "bar" => 2, "baz" => 3];
