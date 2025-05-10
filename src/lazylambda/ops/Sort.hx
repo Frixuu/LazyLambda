@@ -4,6 +4,7 @@ package lazylambda.ops;
 import lazylambda.ds.Comparable;
 import lazylambda.iterators.IIterator;
 import lazylambda.iterators.IteratorSorting;
+import lazylambda.iterators.IteratorSortingBy;
 
 final class Sort {
 
@@ -42,13 +43,7 @@ final class Sort {
     public static extern inline overload function sorted<S_Int: Iterator<Int>>(
         src: S_Int
     ): IIterator<Int> {
-        return sortedWith(src, (a: Int, b: Int) -> if (a < b) {
-            -1;
-        } else if (a > b) {
-            1;
-        } else {
-            0;
-        });
+        return sortedWith(src, (a: Int, b: Int) -> a - b);
     }
     
     /**
@@ -67,5 +62,19 @@ final class Sort {
         } else {
             0;
         });
+    }
+    
+    /**
+        Returns items from the source iterator, sorted using a provided key selector function.
+        @param src The source iterator.
+        @param selector The selector function to use.
+        @return A new iterator.
+    **/
+    @:generic
+    public static extern inline overload function sortedBy<S: Iterator<T>, T>(
+        src: S,
+        selector: (item: T) -> Int
+    ): IIterator<T> {
+        return new IteratorSortingBy(src, selector, (a: Int, b: Int) -> a - b);
     }
 }

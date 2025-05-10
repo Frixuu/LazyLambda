@@ -101,6 +101,34 @@ class SortTest extends Test {
         Assert.equals("everybody", iter.next().value);
         Assert.isFalse(iter.hasNext());
     }
+    
+    public function test__Sorting_by_an_int_key_works() {
+    
+        final array = [
+            new SortFoo(123),
+            new SortFoo(10),
+            new SortFoo(-4),
+            new SortFoo(-3),
+            new SortFoo(999)
+        ];
+        
+        final iter = array.iterator().sortedBy(a -> a.value);
+        Assert.equals(-4, iter.next().value);
+        Assert.equals(-3, iter.next().value);
+        Assert.equals(10, iter.next().value);
+        Assert.equals(123, iter.next().value);
+        Assert.equals(999, iter.next().value);
+        Assert.isFalse(iter.hasNext());
+    }
+}
+
+class SortFoo {
+
+    public final value: Int;
+    
+    public function new(bar: Int) {
+        this.value = bar;
+    }
 }
 
 final class MyClass {
