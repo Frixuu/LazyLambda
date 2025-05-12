@@ -47,8 +47,8 @@ final class Collect {
         @return A new map.
     **/
     @:generic
-    public static extern inline overload function toMap<S: KeyValueIterator<K, V>, K, V>(
-        src: S
+    public static extern inline overload function toMap<S_0: KeyValueIterator<K, V>, K, V>(
+        src: S_0
     ): haxe.ds.Map<K, V> {
         return [for (key => value in src) key => value];
     }
@@ -61,8 +61,8 @@ final class Collect {
         @return A new map.
     **/
     @:generic
-    public static extern inline overload function toMapWith<S: Iterator<T>, T, K, V>(
-        src: S,
+    public static extern inline overload function toMap<S_2: Iterator<T>, T, K, V>(
+        src: S_2,
         keySelector: (T) -> K,
         valueSelector: (T) -> V
     ): haxe.ds.Map<K, V> {
