@@ -10,6 +10,7 @@ typedef Fold = lazylambda.ops.Fold;
 typedef ForEach = lazylambda.ops.ForEach;
 typedef Join = lazylambda.ops.Join;
 typedef Map = lazylambda.ops.Map;
+typedef Match = lazylambda.ops.Match;
 typedef Reduce = lazylambda.ops.Reduce;
 typedef Sort = lazylambda.ops.Sort;
 typedef Take = lazylambda.ops.Take;
