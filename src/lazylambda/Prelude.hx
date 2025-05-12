@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 package lazylambda;
 
+typedef Collect2 = lazylambda.ops.Collect.Collect2;
 typedef Collect = lazylambda.ops.Collect;
 typedef Count = lazylambda.ops.Count;
 typedef Distinct = lazylambda.ops.Distinct;

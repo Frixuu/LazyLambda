@@ -52,7 +52,10 @@ final class Collect {
     ): haxe.ds.Map<K, V> {
         return [for (key => value in src) key => value];
     }
-    
+}
+
+final class Collect2 {
+
     /**
         Collects all of the source iterator's items into a `Map`.
         @param src The source iterator.
