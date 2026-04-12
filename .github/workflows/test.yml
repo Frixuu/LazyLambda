@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     name: "Build suite (with Haxe ${{ matrix.haxe-version }})"
-    runs-on: "ubuntu-latest"
+    runs-on: "ubuntu-slim"
     strategy:
       fail-fast: false
       matrix:
@@ -19,37 +19,21 @@ jobs:
           - "latest"
     steps:
       - name: "Install Haxe"
-        uses: "krdlab/setup-haxe@v1"
+        uses: "krdlab/setup-haxe@v2"
         with:
           haxe-version: "${{ matrix.haxe-version }}"
-      - name: "Get Haxelib local repository path"
-        id: "haxelib-get-path"
-        shell: "bash"
-        run: |
-          echo "dir=$(haxelib config)" >> $GITHUB_OUTPUT
       - name: "Checkout"
-        uses: "actions/checkout@v4"
+        uses: "actions/checkout@v6"
         with:
           lfs: false
-      - name: "Restore cached Haxe dependencies"
-        id: "restore-cache"
-        uses: "actions/cache/restore@v4"
-        with:
-          path: "${{ steps.haxelib-get-path.outputs.dir }}"
-          key: "haxelib-repo-${{ matrix.haxe-version }}-${{ hashFiles('tests/buildTests.hxml') }}"
-          restore-keys: |
-            haxelib-repo-${{ matrix.haxe-version }}-
-            haxelib-repo-
-      - name: "Install Haxe dependencies"
-        if: steps.restore-cache.outputs.cache-hit != 'true'
-        shell: "bash"
-        run: "haxelib install tests/buildTests.hxml --always --quiet"
-      - name: "Cache Haxe dependencies"
-        if: steps.restore-cache.outputs.cache-hit != 'true'
-        uses: "actions/cache/save@v4"
-        with:
-          path: "${{ steps.haxelib-get-path.outputs.dir }}"
-          key: "haxelib-repo-${{ matrix.haxe-version }}-${{ hashFiles('tests/buildTests.hxml') }}"
+      - name: Install Haxe dependencies
+        shell: bash
+        run: haxelib install tests/buildTests.hxml --always --quiet
+      - name: Apply additional config (Haxe 5 only)
+        if: "${{ matrix.haxe-version == 'latest' }}"
+        working-directory: tests
+        shell: bash
+        run: sed --in-place '1i--define haxe5' buildTests.hxml
       - name: "Build tests"
         working-directory: "tests"
         shell: "bash"
@@ -57,7 +41,7 @@ jobs:
         env:
           OCAMLRUNPARAM: "b"
       - name: "Upload built suites"
-        uses: "actions/upload-artifact@v4"
+        uses: "actions/upload-artifact@v7"
         with:
           name: "suites-${{ matrix.haxe-version }}"
           path: "tests/out/"
@@ -70,6 +54,7 @@ jobs:
       fail-fast: false
       matrix:
         hl-version:
+          - "1.14.0"
           - "1.15.0"
         haxe-version:
           - "4.2.0"
@@ -79,11 +64,11 @@ jobs:
       - "build"
     steps:
       - name: "Install Hashlink"
-        uses: "cedx/setup-hashlink@v6"
+        uses: "cedx/setup-hashlink@v8"
         with:
           version: "${{ matrix.hl-version }}"
       - name: "Download test suites"
-        uses: "actions/download-artifact@v4"
+        uses: "actions/download-artifact@v8"
         with:
           name: "suites-${{ matrix.haxe-version }}"
       - name: "Run test suite"
@@ -93,7 +78,7 @@ jobs:
         shell: "bash"
         run: "mv lcov.info lcov-hashlink-${{ matrix.hl-version }}-${{ matrix.haxe-version }}.info"
       - name: "Save coverage stats as an artifact"
-        uses: "actions/upload-artifact@v4"
+        uses: "actions/upload-artifact@v7"
         with:
           name: "coverage-hashlink-${{ matrix.hl-version }}-${{ matrix.haxe-version }}"
           path: "lcov*.info"
@@ -102,13 +87,14 @@ jobs:
 
   java:
     name: "Java ${{ matrix.java-version }} (built with ${{ matrix.haxe-version }}, Linux)"
-    runs-on: "ubuntu-latest"
+    runs-on: "ubuntu-slim"
     strategy:
       fail-fast: false
       matrix:
         java-version:
           - "8"
-          - "23"
+          - "11"
+          - "25"
         haxe-version:
           - "4.2.0"
           - "4.3.7"
@@ -117,12 +103,12 @@ jobs:
       - "build"
     steps:
       - name: "Install Java"
-        uses: "actions/setup-java@v4"
+        uses: "actions/setup-java@v5"
         with:
           distribution: "temurin"
           java-version: "${{ matrix.java-version }}"
       - name: "Download test suites"
-        uses: "actions/download-artifact@v4"
+        uses: "actions/download-artifact@v8"
         with:
           name: "suites-${{ matrix.haxe-version }}"
 
@@ -133,7 +119,7 @@ jobs:
         shell: "bash"
         run: "mv lcov.info lcov-java-${{ matrix.java-version }}-${{ matrix.haxe-version }}.info"
       - name: "Save coverage stats as an artifact"
-        uses: "actions/upload-artifact@v4"
+        uses: "actions/upload-artifact@v7"
         with:
           name: "coverage-java-${{ matrix.java-version }}-${{ matrix.haxe-version }}"
           path: "lcov*.info"
@@ -141,13 +127,16 @@ jobs:
           retention-days: 1
 
   lua:
-    name: "Lua ${{ matrix.lua-version }} (built with ${{ matrix.haxe-version }}, Linux)"
-    runs-on: "ubuntu-latest"
+    name: Lua ${{ matrix.lua-version }} (built with ${{ matrix.haxe-version }}, Linux)
+    runs-on: ubuntu-slim
     strategy:
       fail-fast: false
       matrix:
         lua-version:
           - "5.1"
+          - "luajit-2.1"
+          - "5.2"
+          - "5.4"
         haxe-version:
           - "4.2.0"
           - "4.3.7"
@@ -155,25 +144,33 @@ jobs:
     needs:
       - "build"
     steps:
+      - name: Update Ubuntu repositories
+        run: sudo apt-get update
       - name: "Install Lua"
-        uses: "leafo/gh-actions-lua@v11"
+        uses: "leafo/gh-actions-lua@v12"
         with:
           luaVersion: "${{ matrix.lua-version }}"
           buildCache: false
       - name: "Install Luarocks"
-        uses: "leafo/gh-actions-luarocks@v5"
+        uses: "leafo/gh-actions-luarocks@v6"
+      - name: Install Ubuntu packages
+        shell: bash
+        run: sudo apt-get install cmake libpcre2-dev libpcre3-dev
       - name: "Install Lua dependencies"
         shell: "bash"
         run: |
-          sudo apt-get install libpcre3-dev && \
           luarocks install hx-lua-simdjson && \
           luarocks install lrexlib-pcre2 && \
           luarocks install lrexlib-pcre && \
           luarocks install luasocket && \
-          luarocks install luv && \
-          luarocks install bit32
+          luarocks install luautf8 && \
+          luarocks install luv
+      - name: Install Lua dependencies (bit32)
+        if: "${{ matrix.lua-version != '5.2' }}"
+        shell: bash
+        run: luarocks install bit32
       - name: "Download test suites"
-        uses: "actions/download-artifact@v4"
+        uses: "actions/download-artifact@v8"
         with:
           name: "suites-${{ matrix.haxe-version }}"
       - name: "Run test suite"
@@ -183,7 +180,7 @@ jobs:
         shell: "bash"
         run: "mv lcov.info lcov-lua-${{ matrix.lua-version }}-${{ matrix.haxe-version }}.info"
       - name: "Save coverage stats as an artifact"
-        uses: "actions/upload-artifact@v4"
+        uses: "actions/upload-artifact@v7"
         with:
           name: "coverage-lua-${{ matrix.lua-version }}-${{ matrix.haxe-version }}"
           path: "lcov*.info"
@@ -192,12 +189,13 @@ jobs:
 
   nodejs:
     name: "Node.js ${{ matrix.node-version }} (built with ${{ matrix.haxe-version }}, Linux)"
-    runs-on: "ubuntu-latest"
+    runs-on: "ubuntu-slim"
     strategy:
       fail-fast: false
       matrix:
         node-version:
-          - "22"
+          - "20"
+          - "24"
         haxe-version:
           - "4.2.0"
           - "4.3.7"
@@ -206,11 +204,11 @@ jobs:
       - "build"
     steps:
       - name: "Install Node.js"
-        uses: "actions/setup-node@v4"
+        uses: "actions/setup-node@v6"
         with:
           node-version: "${{ matrix.node-version }}"
       - name: "Download test suites"
-        uses: "actions/download-artifact@v4"
+        uses: "actions/download-artifact@v8"
         with:
           name: "suites-${{ matrix.haxe-version }}"
       - name: "Run test suite"
@@ -220,7 +218,7 @@ jobs:
         shell: "bash"
         run: "mv lcov.info lcov-nodejs-${{ matrix.node-version }}-${{ matrix.haxe-version }}.info"
       - name: "Save coverage stats as an artifact"
-        uses: "actions/upload-artifact@v4"
+        uses: "actions/upload-artifact@v7"
         with:
           name: "coverage-nodejs-${{ matrix.node-version }}-${{ matrix.haxe-version }}"
           path: "lcov*.info"
@@ -229,7 +227,7 @@ jobs:
 
   coverage:
     name: "Process code coverage results"
-    runs-on: "ubuntu-latest"
+    runs-on: "ubuntu-slim"
     needs:
       - "hashlink"
       - "java"
@@ -237,14 +235,14 @@ jobs:
       - "nodejs"
     steps:
       - name: "Checkout (for additional metadata)"
-        uses: "actions/checkout@v4"
+        uses: "actions/checkout@v6"
       - name: "Download coverage stats from the artifacts"
-        uses: "actions/download-artifact@v4"
+        uses: "actions/download-artifact@v8"
         with:
           pattern: "coverage-*"
           merge-multiple: true
       - name: "Upload code coverage report to Codecov"
-        uses: "codecov/codecov-action@v5"
+        uses: "codecov/codecov-action@v6"
         with:
           token: "${{ secrets.CODECOV_TOKEN }}"
           disable_search: false

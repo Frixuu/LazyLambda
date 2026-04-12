@@ -1,6 +1,6 @@
 --class-path ../src
 --class-path src
---library utest:git:https://github.com/haxe-utest/utest#f759c0aa257aa723b3dd607cf7cb53d16194d13f
+--library utest:git:https://github.com/haxe-utest/utest#a055e05e2e872ae12a32b53d0200612345059c38
 --library instrument:1.4.0
 
 --define coverage-console-summary-reporter
@@ -15,6 +15,7 @@
 --each
 
 --library hashlink
+--define hl-ver=1.14.0
 --hl out/hashlink/suite.hl
 
 --next
@@ -32,7 +33,6 @@
 --jvm out/java/suite.jar
 
 --next
---define lua-vanilla
 --define lua-ver=5.1
 --lua out/lua/suite.lua
 
