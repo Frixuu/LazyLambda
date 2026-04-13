@@ -3,7 +3,7 @@ package lazylambda.iterators;
 
 import lazylambda.NoItemsException;
 
-@:generic
+#if target.static @:generic #end
 final class IteratorFilteringNonNull<S: Iterator<Null<T>>, T> implements IIterator<T> {
 
     private final src: S;

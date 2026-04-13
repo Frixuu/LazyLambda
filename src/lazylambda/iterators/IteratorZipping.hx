@@ -4,7 +4,7 @@ package lazylambda.iterators;
 import lazylambda.NoItemsException;
 import lazylambda.ds.Pair;
 
-@:generic
+#if target.static @:generic #end
 final class IteratorZipping<ST: Iterator<T>, T, SU: Iterator<U>, U>
     implements IIterator<Pair<T, U>> {
     

@@ -5,7 +5,7 @@ package lazylambda.ds;
     A set backed by a red-black tree,
     with only a minimal subset of its methods implemented.
 **/
-@:generic
+#if target.static @:generic #end
 final class RbTreeSet<T> {
 
     private final comparator: (T, T) -> Int;
@@ -139,7 +139,7 @@ final class RbTreeSet<T> {
     }
 }
 
-@:generic
+#if target.static @:generic #end
 private final class Node<T> {
 
     /**

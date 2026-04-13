@@ -4,9 +4,9 @@ package lazylambda.iterators;
 import haxe.ds.ArraySort;
 import haxe.iterators.ArrayIterator;
 import lazylambda.NoItemsException;
-import lazylambda.Prelude.Collect;
+import lazylambda.ops.Collect;
 
-@:generic
+#if target.static @:generic #end
 final class IteratorSorting<S: Iterator<T>, T> implements IIterator<T> {
 
     private final src: S;

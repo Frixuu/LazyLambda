@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 package lazylambda.iterators;
 
-@:generic
+#if target.static @:generic #end
 final class IteratorMapping<S: Iterator<T>, T, R> implements IIterator<R> {
 
     private final src: S;

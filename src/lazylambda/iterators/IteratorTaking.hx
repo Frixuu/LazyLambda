@@ -3,7 +3,7 @@ package lazylambda.iterators;
 
 import lazylambda.NoItemsException;
 
-@:generic
+#if target.static @:generic #end
 final class IteratorTaking<S: Iterator<T>, T> implements IIterator<T> {
 
     private final src: S;

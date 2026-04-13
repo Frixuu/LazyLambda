@@ -8,7 +8,7 @@ import lazylambda.ds.Pair;
 
 using lazylambda.Prelude;
 
-@:generic
+#if target.static @:generic #end
 final class IteratorSortingBy<S: Iterator<T>, T, K> implements IIterator<T> {
 
     private final src: S;

@@ -4,7 +4,7 @@ package lazylambda.iterators;
 import haxe.ds.Option;
 import lazylambda.NoItemsException;
 
-@:generic
+#if target.static @:generic #end
 final class IteratorFiltering<S: Iterator<T>, T> implements IIterator<T> {
 
     private final src: S;
