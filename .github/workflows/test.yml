@@ -85,6 +85,43 @@ jobs:
           if-no-files-found: "error"
           retention-days: 1
 
+  cpp:
+    name: C++ (built with ${{ matrix.haxe-version }}, Linux)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        haxe-version:
+          - "4.3.7"
+    needs:
+      - build
+    steps:
+      - name: Install Haxe
+        uses: krdlab/setup-haxe@v2
+        with:
+          haxe-version: "${{ matrix.haxe-version }}"
+      - name: Install hxcpp
+        run: haxelib install hxcpp 4.3.2 --quiet
+      - name: Download test suites
+        uses: actions/download-artifact@v8
+        with:
+          name: suites-${{ matrix.haxe-version }}
+      - name: Compile test suites
+        run: haxelib run hxcpp Build.xml
+        working-directory: cpp
+      - name: Run test suite
+        run: ./cpp/TestSuiteMain
+      - name: Name coverage stats
+        shell: bash
+        run: mv lcov.info lcov-cpp-${{ matrix.haxe-version }}.info
+      - name: Save coverage stats as an artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: coverage-cpp-${{ matrix.haxe-version }}
+          path: lcov*.info
+          if-no-files-found: error
+          retention-days: 1
+
   java:
     name: "Java ${{ matrix.java-version }} (built with ${{ matrix.haxe-version }}, Linux)"
     runs-on: "ubuntu-slim"
@@ -266,6 +303,7 @@ jobs:
     runs-on: "ubuntu-slim"
     needs:
       - hashlink
+      - cpp
       - java
       - lua
       - nodejs
