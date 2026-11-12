@@ -2,3 +2,4 @@ dump/
 .idea/
 .vscode/
 .zed/
+*.zip

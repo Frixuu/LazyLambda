@@ -5,7 +5,7 @@
   "license": "MIT",
   "version": "0.1.0",
   "classPath": "src/",
-  "releasenote": "N/A",
+  "releasenote": "Initial release.",
   "contributors": ["frixuu"],
   "dependencies": {},
   "tags": ["collection", "ds", "lambda"]
